@@ -58,9 +58,18 @@ public class InputManager : MonoBehaviour
     // Gets controller inputs and values for use with body
     private void GetControllerInputs()
     {
+        // Headset controller position & rotation
+        cameraControllerPosition = CameraController.positionAction.action.ReadValue<Vector3>();
+        cameraControllerRotation = CameraController.rotationAction.action.ReadValue<Quaternion>();
+
         // Right controller position & rotation
         rightHandControllerPosition = RightHandController.positionAction.action.ReadValue<Vector3>();
         rightHandControllerRotation = RightHandController.rotationAction.action.ReadValue<Quaternion>();
+
+        // Left contoller position & rotation
+        leftHandControllerPosition = LeftHandController.positionAction.action.ReadValue<Vector3>();
+        leftHandControllerRotation = LeftHandController.rotationAction.action.ReadValue<Quaternion>();
+
         // Right trackpad value, press and touch
         rightTrackpadValue = RightHandController.translateAnchorAction.action.ReadValue<Vector2>();
         rightTrackpadPressed = RightTrackPadPress.action.ReadValue<float>();
@@ -69,9 +78,6 @@ public class InputManager : MonoBehaviour
         rightPrimaryPressed = RightPrimaryPress.action.ReadValue<float>();
         rightSecondaryPressed = RightSecondaryPress.action.ReadValue<float>();
 
-        // Left contoller position & rotation
-        leftHandControllerPosition = LeftHandController.positionAction.action.ReadValue<Vector3>();
-        leftHandControllerRotation = LeftHandController.rotationAction.action.ReadValue<Quaternion>();
         // Left trackpad value, press and touch
         leftTrackpadValue = LeftHandController.translateAnchorAction.action.ReadValue<Vector2>();
         leftTrackpadPressed = LeftTrackPadPress.action.ReadValue<float>();
@@ -79,9 +85,5 @@ public class InputManager : MonoBehaviour
         // Left primary and secondary press
         leftPrimaryPressed = LeftPrimaryPress.action.ReadValue<float>();
         leftSecondaryPressed = LeftSecondaryPress.action.ReadValue<float>();
-
-        // Headset controller position & rotation
-        cameraControllerPosition = CameraController.positionAction.action.ReadValue<Vector3>();
-        cameraControllerRotation = CameraController.rotationAction.action.ReadValue<Quaternion>();
     }
 }

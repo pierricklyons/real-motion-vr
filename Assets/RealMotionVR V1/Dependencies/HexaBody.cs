@@ -11,7 +11,7 @@ public class HexaBody : MonoBehaviour
     public GameObject CameraOffset;
 
     // Reference to InputManager script
-    private InputManager InputManager;
+    public InputManager InputManager;
 
     [Header("Hexabody")]
     public GameObject Body;
@@ -62,7 +62,7 @@ public class HexaBody : MonoBehaviour
     // On script start
     void Start()
     {
-        InputManager = gameObject.GetComponent<InputManager>();
+        InputManager.GetComponent<InputManager>();
         InitializePlayerHeight();
     }
 
