@@ -16,10 +16,6 @@ public class Movement : MonoBehaviour
     void Start()
     {
         InputManager.GetComponent<InputManager>();
-
-        previousCameraPosition = CameraController.position;
-
-        sphereRadius = Sphere.transform.lossyScale.y * .5f;
     }
 
     void FixedUpdate()
@@ -36,19 +32,6 @@ public class Movement : MonoBehaviour
 
     private void MoveSphere(float force)
     {
-        // Calculate camera delta movement
-        Vector3 cameraDelta = CameraController.position - previousCameraPosition;
-
-        // Calculate rotation from camera movement
-        Vector3 rotationFromCamera = cameraDelta / sphereRadius * Mathf.Rad2Deg;
-
-        // Apply rotation from camera movement to the monoball
-        Sphere.GetComponent<Rigidbody>().AddTorque(rotationFromCamera, ForceMode.Force);
-
-        // Apply additional directional movement based on user input
         Sphere.GetComponent<Rigidbody>().AddTorque(GetSphereDirection() * force, ForceMode.Force);
-
-        // Update the previous camera position
-        previousCameraPosition = CameraController.position;
     }
 }
