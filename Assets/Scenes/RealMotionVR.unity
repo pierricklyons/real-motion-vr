@@ -528,9 +528,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InputManager: {fileID: 2007423875}
   Sphere: {fileID: 3497104866361545318}
+  XROrigin: {fileID: 3497104866081070392}
   CameraController: {fileID: 3497104865327509625}
-  moveForce: 20
-  movementSpeed: 5
+  moveForce: 0.1
+  dampingFactor: 0.0001
 --- !u!114 &3497104865217976682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2609,7 +2610,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3497104866361545318}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 90c1da494f8e54247ad25ea6cb0bda2c, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
