@@ -528,10 +528,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InputManager: {fileID: 2007423875}
   Sphere: {fileID: 3497104866361545318}
-  XROrigin: {fileID: 3497104866081070392}
   CameraController: {fileID: 3497104865327509625}
-  moveForce: 0.1
-  dampingFactor: 0.0001
+  torqueMultiplier: 1
+  error: {x: 0, y: 0, z: 0}
+  Kp: 100
+  Ki: 1
+  Kd: 10
 --- !u!114 &3497104865217976682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2163,7 +2165,7 @@ Transform:
   m_GameObject: {fileID: 3497104866117921646}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 4.4444447, y: 4.4444447, z: 4.4444447}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3497104866353300505}

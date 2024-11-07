@@ -8,8 +8,8 @@ public class MovementPhysics : MonoBehaviour
     public InputManager InputManager;
     public GameObject Sphere;
     public Transform CameraController;
-    // public float moveForce = 10f;
-    // public float dampingFactor = 0.9f;
+
+    public float torqueMultiplier = 1;
 
     // PID controller gains
     public Vector3 error;
@@ -55,13 +55,10 @@ public class MovementPhysics : MonoBehaviour
         // PID force calculation
         Vector3 pidForce = (Kp * error) + (Ki * integralError) + (Kd * derivativeError);
 
-        // Apply force to the sphere based on PID output
-        sphereRigidbody.AddForce(pidForce, ForceMode.Force);
-
         // Apply rotational torque based on movement direction for realism
         float rotationAmount = pidForce.magnitude / sphereRadius;
         Vector3 rotationAxis = Vector3.Cross(Vector3.up, pidForce.normalized).normalized;
-        sphereRigidbody.AddTorque(rotationAxis * rotationAmount, ForceMode.Force);
+        sphereRigidbody.AddTorque(rotationAxis * rotationAmount * torqueMultiplier, ForceMode.Force);
 
         // Update last error for next derivative calculation
         lastError = error;
