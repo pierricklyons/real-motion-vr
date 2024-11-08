@@ -3,120 +3,128 @@ using Unity.XR.CoreUtils;
 
 public class HexaBody : MonoBehaviour
 {
-    // Public inspector fields
-    [Header("XR Rig")]
-    public GameObject PlayerController;
-    public XROrigin XROrigin;
-    public GameObject CameraOffset;
-    public GameObject XRCamera;
+	// Public inspector fields
+	[Header("XR Rig")]
+	public GameObject PlayerController;
+	public XROrigin XROrigin;
+	public GameObject CameraOffset;
+	public GameObject XRCamera;
 
-    // Reference to InputManager script
-    public InputManager InputManager;
+	// Reference to InputManager script
+	public InputManager InputManager;
 
-    [Header("Hexabody")]
-    public GameObject Head;
-    public GameObject Chest;
-    public GameObject Fender;
-    public GameObject Sphere;
-    public ConfigurableJoint Spine;
+	[Header("Hexabody")]
+	public GameObject Head;
+	public GameObject Chest;
+	public GameObject Fender;
+	public GameObject Sphere;
+	public ConfigurableJoint Spine;
 
-    [Header("Crouch and Jump")]
-    public float jumpPreloadForce = 1.3f;
-    public float jumpReleaseForce = 1.3f;
-    public float jumpMinCrouch = 0.125f;
-    public float crouchForce = 0.005f;
-    public float minCrouch = 0f;
-    public float maxCrouch = 1.8f;
-    public Vector3 crouchTarget;
+	[Header("Crouch and Jump")]
+	public float jumpPreloadForce = 1.3f;
+	public float jumpReleaseForce = 1.3f;
+	public float jumpMinCrouch = 0.125f;
+	public float crouchForce = 0.005f;
+	public float minCrouch = 0f;
+	public float maxCrouch = 1.8f;
+	public Vector3 crouchTarget;
 
-    // Body fields
-    private bool jumping = false;
-    private bool tiptoeing = false;
+	// Body fields
+	private bool jumping = false;
+	private bool tiptoeing = false;
 
-    private float originalHeight;
-    private float additionalHeight;
+	private float playerHeight;
+	private float additionalHeight;
 
-    // On script start
-    void Start()
-    {
-        InputManager.GetComponent<InputManager>();
-        InitializePlayerHeight();
-    }
+	// On script start
+	void Start()
+	{
+		InputManager.GetComponent<InputManager>();
+		InitializePlayerHeight();
+	}
 
-    // On every physics update
-    private void FixedUpdate()
-    {
-        Jump();
-        CrouchControl();
-    }
+	// On every physics update
+	private void FixedUpdate()
+	{
+		Jump();
+		CrouchControl();
+		if (InputManager.leftSecondaryPressed == 1) SetPlayerHeight();
+	}
 
-    // Initialize player's height
-    private void InitializePlayerHeight()
-    {
-        originalHeight = (0.5f * Sphere.transform.lossyScale.y) + (0.5f * Fender.transform.lossyScale.y) + (Head.transform.position.y - Chest.transform.position.y);
-        additionalHeight = originalHeight;
-    }
+	// Initialize player's height
+	private void InitializePlayerHeight()
+	{
+		playerHeight = (0.5f * Sphere.transform.lossyScale.y) + (0.5f * Fender.transform.lossyScale.y) + (Head.transform.position.y - Chest.transform.position.y);
+		additionalHeight = playerHeight;
+	}
 
-    // Jump control on input
-    private void Jump()
-    {
-        bool jumpButtonPressed = InputManager.rightPrimaryPressed == 1 || InputManager.rightTrackpadPressed == 1;
-        if (jumpButtonPressed) JumpPreload();
-        else if (jumping == true) JumpRelease();
-    }
+	// Reset player's height
+	private void SetPlayerHeight()
+	{
+		playerHeight = InputManager.CameraController.transform.position.y;
+		additionalHeight = playerHeight;
+	}
 
-    // Virtual crouch preload for jump
-    private void JumpPreload()
-    {
-        jumping = true;
-        crouchTarget.y = Mathf.Clamp(crouchTarget.y -= jumpPreloadForce * Time.fixedDeltaTime, jumpMinCrouch, maxCrouch);
-        Spine.targetPosition = new Vector3(0, crouchTarget.y, 0);
-    }
+	// Jump control on input
+	private void Jump()
+	{
+		bool jumpButtonPressed = InputManager.rightPrimaryPressed == 1 || InputManager.rightTrackpadPressed == 1;
+		if (jumpButtonPressed) JumpPreload();
+		else if (jumping == true) JumpRelease();
+	}
 
-    // Virtual crouch release for jump
-    private void JumpRelease()
-    {
-        jumping = false;
-        crouchTarget.y = Mathf.Clamp(crouchTarget.y += jumpReleaseForce * Time.fixedDeltaTime, jumpMinCrouch, maxCrouch);
-        Spine.targetPosition = new Vector3(0, crouchTarget.y, 0);
-    }
+	// Virtual crouch preload for jump
+	private void JumpPreload()
+	{
+		jumping = true;
+		crouchTarget.y = Mathf.Clamp(crouchTarget.y -= jumpPreloadForce * Time.fixedDeltaTime, jumpMinCrouch, maxCrouch);
+		Spine.targetPosition = new Vector3(0, crouchTarget.y, 0);
+	}
 
-    // Crouch control
-    private void CrouchControl()
-    {
-        if (jumping) return;
+	// Virtual crouch release for jump
+	private void JumpRelease()
+	{
+		jumping = false;
+		crouchTarget.y = Mathf.Clamp(crouchTarget.y += jumpReleaseForce * Time.fixedDeltaTime, jumpMinCrouch, maxCrouch);
+		Spine.targetPosition = new Vector3(0, crouchTarget.y, 0);
+	}
 
-        VirtuallyCrouch();
-        PhysicallyCrouch();
-        if (InputManager.rightSecondaryPressed == 1) ResetCrouchHeight();
-    }
+	// Crouch control
+	private void CrouchControl()
+	{
+		if (jumping) return;
 
-    // Resets height to originalHeight calculated at Start()
-    private void ResetCrouchHeight()
-    {
-        additionalHeight = originalHeight;
-    }
+		VirtuallyCrouch();
+		PhysicallyCrouch();
+		if (InputManager.rightSecondaryPressed == 1) ResetCrouchHeight();
+	}
 
-    // Additional height on input for virtual crouch 
-    private void VirtuallyCrouch()
-    {
-        if (InputManager.rightTrackpadValue.y < -0.85f) additionalHeight += crouchForce;
-        if (InputManager.rightTrackpadValue.y > 0.85f)
-        {
-            tiptoeing = true;
-            additionalHeight -= crouchForce;
-        }
-        if (tiptoeing == true && InputManager.rightTrackpadValue.y < 0.85f && additionalHeight < originalHeight)
-        {
-            ResetCrouchHeight();
-            tiptoeing = false;
-        }
-    }
+	// Resets height to originalHeight calculated at Start()
+	private void ResetCrouchHeight()
+	{
+		additionalHeight = playerHeight;
+	}
 
-    // Physical crouch dictated by head height and additional height based on virtual crouch
-    private void PhysicallyCrouch()
-    {
-        crouchTarget.y = Mathf.Clamp(InputManager.cameraControllerPosition.y - additionalHeight, minCrouch, maxCrouch - originalHeight);
-        Spine.targetPosition = new Vector3(0, crouchTarget.y, 0);
-    }
+	// Additional height on input for virtual crouch 
+	private void VirtuallyCrouch()
+	{
+		if (InputManager.rightTrackpadValue.y < -0.85f) additionalHeight += crouchForce;
+		if (InputManager.rightTrackpadValue.y > 0.85f)
+		{
+			tiptoeing = true;
+			additionalHeight -= crouchForce;
+		}
+		if (tiptoeing == true && InputManager.rightTrackpadValue.y < 0.85f && additionalHeight < playerHeight)
+		{
+			ResetCrouchHeight();
+			tiptoeing = false;
+		}
+	}
+
+	// Physical crouch dictated by head height and additional height based on virtual crouch
+	private void PhysicallyCrouch()
+	{
+		crouchTarget.y = Mathf.Clamp(InputManager.cameraControllerPosition.y - additionalHeight, minCrouch, maxCrouch - playerHeight);
+		Spine.targetPosition = new Vector3(0, crouchTarget.y, 0);
+	}
 }
