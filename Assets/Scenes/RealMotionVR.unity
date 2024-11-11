@@ -1183,6 +1183,9 @@ MonoBehaviour:
   ControllerSelect: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   Hand: {fileID: 0}
   releaseDelay: 300
+  ControllerSelected: 0
+  joint: {fileID: 0}
+  attached: 0
 --- !u!1 &3497104865382611816
 GameObject:
   m_ObjectHideFlags: 0
@@ -1325,6 +1328,9 @@ MonoBehaviour:
   ControllerSelect: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   Hand: {fileID: 0}
   releaseDelay: 300
+  ControllerSelected: 0
+  joint: {fileID: 0}
+  attached: 0
 --- !u!1 &3497104865714112175
 GameObject:
   m_ObjectHideFlags: 0
@@ -1364,7 +1370,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3497104865857882558}
   m_Layer: 0
-  m_Name: RealMotionVR (Physics Only)
+  m_Name: RealMotionVR V2 (Physics Only)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
