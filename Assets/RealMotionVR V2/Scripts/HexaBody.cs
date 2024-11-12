@@ -20,6 +20,8 @@ public class HexaBody : MonoBehaviour
 	public GameObject Sphere;
 	public ConfigurableJoint Spine;
 
+	public float turnForce = 2.5f;
+
 	[Header("Crouch and Jump")]
 	public float jumpPreloadForce = 1.3f;
 	public float jumpReleaseForce = 1.3f;
@@ -36,19 +38,28 @@ public class HexaBody : MonoBehaviour
 	private float playerHeight;
 	private float additionalHeight;
 
+
+	private Rigidbody headRigidbody;
+	private Rigidbody chestRigidbody;
+	private Rigidbody fenderRigidbody;
+
 	// On script start
 	void Start()
 	{
 		InputManager.GetComponent<InputManager>();
 		InitializePlayerHeight();
+
+		headRigidbody = Head.GetComponent<Rigidbody>();
+		chestRigidbody = Chest.GetComponent<Rigidbody>();
+		fenderRigidbody = Fender.GetComponent<Rigidbody>();
 	}
 
 	// On every physics update
 	private void FixedUpdate()
 	{
+		RotateBody();
 		Jump();
 		CrouchControl();
-		if (InputManager.leftSecondaryPressed == 1) SetPlayerHeight();
 	}
 
 	// Initialize player's height
@@ -58,11 +69,26 @@ public class HexaBody : MonoBehaviour
 		additionalHeight = playerHeight;
 	}
 
-	// Reset player's height
-	private void SetPlayerHeight()
+	// Rotates Rig AND Body
+	private void RotateBody()
 	{
-		playerHeight = InputManager.CameraController.transform.position.y;
-		additionalHeight = playerHeight;
+		if (InputManager.rightTrackpadPressed == 1) return;
+		if (InputManager.rightTrackpadValue.x > 0.25f || InputManager.rightTrackpadValue.x < -0.25f)
+		{
+			// Head.transform.Rotate(0, InputManager.rightTrackpadValue.x * turnForce, 0, Space.Self);
+			// Chest.transform.Rotate(0, InputManager.rightTrackpadValue.x * turnForce, 0, Space.Self);
+			// Fender.transform.Rotate(0, InputManager.rightTrackpadValue.x * turnForce, 0, Space.Self);
+			XROrigin.transform.RotateAround(Head.transform.position, Vector3.up, InputManager.rightTrackpadValue.x * turnForce);
+
+			// Calculate the new rotation using the existing rotation plus the desired turn angle
+			Quaternion deltaRotation = Quaternion.Euler(0, InputManager.rightTrackpadValue.x * turnForce, 0);
+			Quaternion targetRotation = headRigidbody.rotation * deltaRotation;
+
+			// Apply the rotation smoothly using MoveRotation
+			headRigidbody.MoveRotation(targetRotation);
+			chestRigidbody.MoveRotation(targetRotation);
+			fenderRigidbody.MoveRotation(targetRotation);
+		}
 	}
 
 	// Jump control on input
