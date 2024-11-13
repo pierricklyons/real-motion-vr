@@ -86,8 +86,8 @@ public class HexaBody : MonoBehaviour
 
 			// Apply the rotation smoothly using MoveRotation
 			headRigidbody.MoveRotation(targetRotation);
-			chestRigidbody.MoveRotation(targetRotation);
-			fenderRigidbody.MoveRotation(targetRotation);
+			// chestRigidbody.MoveRotation(targetRotation);
+			// fenderRigidbody.MoveRotation(targetRotation);
 		}
 	}
 

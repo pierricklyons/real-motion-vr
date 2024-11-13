@@ -3224,7 +3224,7 @@ ConfigurableJoint:
   m_YMotion: 1
   m_ZMotion: 0
   m_AngularXMotion: 0
-  m_AngularYMotion: 2
+  m_AngularYMotion: 0
   m_AngularZMotion: 0
   m_LinearLimitSpring:
     spring: 0
