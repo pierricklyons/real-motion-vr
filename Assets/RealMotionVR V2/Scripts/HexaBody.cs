@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.XR.CoreUtils;
+using Unity.VisualScripting;
 
 public class HexaBody : MonoBehaviour
 {
@@ -48,18 +49,19 @@ public class HexaBody : MonoBehaviour
 	{
 		InputManager.GetComponent<InputManager>();
 		InitializePlayerHeight();
-
-		headRigidbody = Head.GetComponent<Rigidbody>();
-		chestRigidbody = Chest.GetComponent<Rigidbody>();
-		fenderRigidbody = Fender.GetComponent<Rigidbody>();
 	}
 
 	// On every physics update
 	private void FixedUpdate()
 	{
-		RotateBody();
 		Jump();
 		CrouchControl();
+		AlignXROriginAndPhysicsRigVertically();
+	}
+
+	private void AlignXROriginAndPhysicsRigVertically()
+	{
+		XROrigin.transform.position = new Vector3(XROrigin.transform.position.x, Sphere.transform.position.y - Sphere.transform.lossyScale.y * 0.5f, XROrigin.transform.position.z);
 	}
 
 	// Initialize player's height
@@ -67,28 +69,6 @@ public class HexaBody : MonoBehaviour
 	{
 		playerHeight = (0.5f * Sphere.transform.lossyScale.y) + (0.5f * Fender.transform.lossyScale.y) + (Head.transform.position.y - Chest.transform.position.y);
 		additionalHeight = playerHeight;
-	}
-
-	// Rotates Rig AND Body
-	private void RotateBody()
-	{
-		if (InputManager.rightTrackpadPressed == 1) return;
-		if (InputManager.rightTrackpadValue.x > 0.25f || InputManager.rightTrackpadValue.x < -0.25f)
-		{
-			// Head.transform.Rotate(0, InputManager.rightTrackpadValue.x * turnForce, 0, Space.Self);
-			// Chest.transform.Rotate(0, InputManager.rightTrackpadValue.x * turnForce, 0, Space.Self);
-			// Fender.transform.Rotate(0, InputManager.rightTrackpadValue.x * turnForce, 0, Space.Self);
-			XROrigin.transform.RotateAround(Head.transform.position, Vector3.up, InputManager.rightTrackpadValue.x * turnForce);
-
-			// Calculate the new rotation using the existing rotation plus the desired turn angle
-			Quaternion deltaRotation = Quaternion.Euler(0, InputManager.rightTrackpadValue.x * turnForce, 0);
-			Quaternion targetRotation = headRigidbody.rotation * deltaRotation;
-
-			// Apply the rotation smoothly using MoveRotation
-			headRigidbody.MoveRotation(targetRotation);
-			// chestRigidbody.MoveRotation(targetRotation);
-			// fenderRigidbody.MoveRotation(targetRotation);
-		}
 	}
 
 	// Jump control on input
