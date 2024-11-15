@@ -56,13 +56,13 @@ public class HexaBody : MonoBehaviour
 	{
 		Jump();
 		CrouchControl();
-		// AlignXROriginAndPhysicsRigVertically();
+		AlignXROriginAndPhysicsRigVertically();
 	}
 
-	// private void AlignXROriginAndPhysicsRigVertically()
-	// {
-	// 	XROrigin.transform.position = new Vector3(XROrigin.transform.position.x, Sphere.transform.position.y - Sphere.transform.lossyScale.y * 0.5f, XROrigin.transform.position.z);
-	// }
+	private void AlignXROriginAndPhysicsRigVertically()
+	{
+		XROrigin.transform.position = new Vector3(XROrigin.transform.position.x, Sphere.transform.position.y - Sphere.transform.lossyScale.y * 0.5f, XROrigin.transform.position.z);
+	}
 
 	// Initialize player's height
 	private void InitializePlayerHeight()
