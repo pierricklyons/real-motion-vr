@@ -5,6 +5,8 @@ using UnityEngine;
 public class SpineController : MonoBehaviour
 {
     public XRInputManager XRInputManager;
+    public GameObject Head;
+    public GameObject Chest;
     public GameObject Fender;
     public ConfigurableJoint Spine;
 
@@ -13,7 +15,7 @@ public class SpineController : MonoBehaviour
 
     void Awake()
     {
-        verticalOffset = Fender.transform.position.y;
+        verticalOffset = Fender.transform.position.y + (Head.transform.position.y - Chest.transform.position.y);
     }
 
     void FixedUpdate()
