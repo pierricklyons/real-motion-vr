@@ -16,6 +16,6 @@ public class HeadController : MonoBehaviour
 
     void Update()
     {
-        // XRCamera.transform.rotation = XRInputManager.CameraControllerRotation;
+        XRCamera.transform.position = Head.transform.position;
     }
 }
