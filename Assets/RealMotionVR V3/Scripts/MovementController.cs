@@ -24,7 +24,6 @@ public class MovementController : MonoBehaviour
     void Start()
     {
         sphereRigidbody = Sphere.GetComponent<Rigidbody>();
-
         sphereRadius = Sphere.GetComponent<SphereCollider>().radius * Sphere.transform.localScale.x;
 
         lastCameraPosition = XRInputManager.CameraControllerPosition;
@@ -34,6 +33,7 @@ public class MovementController : MonoBehaviour
     void FixedUpdate()
     {
         UpdateTargetPosition();
+
         ApplyPIDControl(targetPosition);
     }
 
