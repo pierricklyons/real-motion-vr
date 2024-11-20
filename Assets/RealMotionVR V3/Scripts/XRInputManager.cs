@@ -77,6 +77,5 @@ public class XRInputManager : MonoBehaviour
         RightTranslateAnchorValue = RightHandController.translateAnchorAction.action.ReadValue<Vector2>();
         RightPrimaryValue = RightPrimaryPress.action.ReadValue<float>();
         RightSecondaryValue = RightSecondaryPress.action.ReadValue<float>();
-
     }
 }
