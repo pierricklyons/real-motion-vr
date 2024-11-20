@@ -11,7 +11,7 @@ public class SpineController : MonoBehaviour
     public ConfigurableJoint Spine;
 
     private float verticalOffset;
-    private float spineTarget;
+    // private float spineTarget;
 
     void Awake()
     {
@@ -25,7 +25,7 @@ public class SpineController : MonoBehaviour
 
     private void SetSpineTargetPosition()
     {
-        spineTarget = XRInputManager.CameraControllerPosition.y - verticalOffset;
+        float spineTarget = XRInputManager.CameraControllerPosition.y - verticalOffset;
 
         Spine.targetPosition = new Vector3(0, spineTarget, 0);
     }

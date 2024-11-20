@@ -35,10 +35,10 @@ public class XRInputManager : MonoBehaviour
     {
         GetControllerInputs();
 
-        AreControllersInitialized = CheckControllersInitialized();
+        AreControllersInitialized = GetAreControllersInitialized();
     }
 
-    private bool CheckControllersInitialized()
+    private bool GetAreControllersInitialized()
     {
         return
             GetIsPositionValid(CameraControllerPosition) &&
