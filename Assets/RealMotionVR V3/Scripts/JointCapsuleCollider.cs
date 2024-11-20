@@ -4,7 +4,7 @@ public class JointCapsuleCollider : MonoBehaviour
     public ConfigurableJoint Joint;
     public CapsuleCollider CapsuleCollider;
 
-    void FixedUpdate()
+    void Update()
     {
         // Calculate the world positions of the joint's anchor points
         Vector3 anchorPositionA = Joint.transform.TransformPoint(Joint.anchor);

@@ -15,40 +15,42 @@ public class MovementController : MonoBehaviour
 
     private Rigidbody sphereRigidbody;
     private float sphereRadius;
-    private Vector3 lastError;
+
+    public Vector3 lastError;
     private Vector3 integralError;
 
     private Vector3 lastCameraPosition;
+    private Vector3 lastSpherePosition;
+
     private Vector3 targetPosition;
 
-    void Start()
+    void Awake()
     {
         sphereRigidbody = Sphere.GetComponent<Rigidbody>();
         sphereRadius = Sphere.GetComponent<SphereCollider>().radius * Sphere.transform.localScale.x;
 
         lastCameraPosition = XRInputManager.CameraControllerPosition;
         targetPosition = Sphere.transform.position;
+
+        lastSpherePosition = sphereRigidbody.position;
     }
 
     void FixedUpdate()
     {
         UpdateTargetPosition();
-
         ApplyPIDControl(targetPosition);
     }
 
     private void UpdateTargetPosition()
     {
-        Vector3 cameraControllerDelta = XRInputManager.CameraControllerPosition - lastCameraPosition;
-        cameraControllerDelta.y = 0; // Ignore Y axis
-
         Vector3 movementInput = GetMovementInput();
+        Vector3 cameraControllerDelta = XRInputManager.CameraControllerPosition - lastCameraPosition;
+        Vector3 externalMovementDelta = sphereRigidbody.position - lastSpherePosition;
 
-        Vector3 combinedMovement = cameraControllerDelta + movementInput;
-
-        targetPosition += combinedMovement;
+        targetPosition = sphereRigidbody.position + movementInput + cameraControllerDelta - externalMovementDelta;
 
         lastCameraPosition = XRInputManager.CameraControllerPosition;
+        lastSpherePosition = sphereRigidbody.position;
     }
 
     private Vector3 GetMovementInput()
@@ -62,15 +64,17 @@ public class MovementController : MonoBehaviour
     private void ApplyPIDControl(Vector3 targetPosition)
     {
         Vector3 error = targetPosition - sphereRigidbody.position;
-        error.y = 0; // Ignore vertical error
+        error.y = 0;  // Ignore Y axis
 
         integralError += error * Time.fixedDeltaTime;
+
         Vector3 derivativeError = (error - lastError) / Time.fixedDeltaTime;
 
         Vector3 pidForce = (Kp * error) + (Ki * integralError) + (Kd * derivativeError);
 
         float rotationAmount = pidForce.magnitude / sphereRadius;
         Vector3 rotationAxis = Vector3.Cross(Vector3.up, pidForce.normalized).normalized;
+
         sphereRigidbody.AddTorque(rotationAxis * rotationAmount, ForceMode.Force);
 
         lastError = error;

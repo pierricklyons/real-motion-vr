@@ -506,8 +506,8 @@ Rigidbody:
   m_GameObject: {fileID: 587542591}
   serializedVersion: 3
   m_Mass: 3
-  m_Drag: 0
-  m_AngularDrag: 0
+  m_Drag: 5
+  m_AngularDrag: 5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1218,6 +1218,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 790499309}
+  - component: {fileID: 790499314}
   - component: {fileID: 790499310}
   - component: {fileID: 790499311}
   - component: {fileID: 790499313}
@@ -1265,9 +1266,10 @@ MonoBehaviour:
   XRInputManager: {fileID: 1977701894}
   Sphere: {fileID: 587542591}
   movementTorqueMultiplier: 5
-  Kp: 100
+  Kp: 500
   Ki: 1
   Kd: 10
+  lastError: {x: 0, y: 0, z: 0}
 --- !u!114 &790499311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1285,6 +1287,7 @@ MonoBehaviour:
   Chest: {fileID: 759385253}
   Fender: {fileID: 979376220}
   Spine: {fileID: 979376228}
+  JumpController: {fileID: 0}
 --- !u!114 &790499313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1300,6 +1303,23 @@ MonoBehaviour:
   XRInputManager: {fileID: 1977701894}
   LeftHandJoint: {fileID: 1434652855}
   RightHandJoint: {fileID: 1434652854}
+--- !u!114 &790499314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790499308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa224473c884f424a946113403d61843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  XRInputManager: {fileID: 0}
+  MovementController: {fileID: 0}
+  HandsController: {fileID: 0}
+  SpineController: {fileID: 0}
+  JumpController: {fileID: 0}
 --- !u!1 &859643566
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,9 @@ public class SpineController : MonoBehaviour
     public GameObject Fender;
     public ConfigurableJoint Spine;
 
+    public JumpController JumpController;
+    // public CrouchController CrouchController;
+
     private float verticalOffset;
     // private float spineTarget;
 
@@ -20,13 +23,12 @@ public class SpineController : MonoBehaviour
 
     void FixedUpdate()
     {
-        SetSpineTargetPosition();
+        SetSpineTargetPosition(XRInputManager.CameraControllerPosition.y);
     }
 
-    private void SetSpineTargetPosition()
+    private void SetSpineTargetPosition(float spineTarget)
     {
-        float spineTarget = XRInputManager.CameraControllerPosition.y - verticalOffset;
-
-        Spine.targetPosition = new Vector3(0, spineTarget, 0);
+        float target = spineTarget - verticalOffset;
+        Spine.targetPosition = new Vector3(0, target, 0);
     }
 }
