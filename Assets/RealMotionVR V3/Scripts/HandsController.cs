@@ -10,10 +10,10 @@ public class HandsController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!XRInputManager.AreControllersInitialized) return;
         MoveAndRotateHands();
     }
 
-    // Moves and rotates hands with a target
     private void MoveAndRotateHands()
     {
         LeftHandJoint.targetPosition = XRInputManager.LeftHandControllerPosition - XRInputManager.CameraControllerPosition;
