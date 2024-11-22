@@ -40,13 +40,14 @@ public class XRInputManager : MonoBehaviour
 
     private bool GetAreControllersInitialized()
     {
-        return
+        return (
             GetIsPositionValid(CameraControllerPosition) &&
             GetIsRotationValid(CameraControllerRotation) &&
             GetIsPositionValid(LeftHandControllerPosition) &&
             GetIsRotationValid(LeftHandControllerRotation) &&
             GetIsPositionValid(RightHandControllerPosition) &&
-            GetIsRotationValid(RightHandControllerRotation);
+            GetIsRotationValid(RightHandControllerRotation)
+        );
     }
 
     private bool GetIsPositionValid(Vector3 position)

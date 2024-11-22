@@ -1,34 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpineController : MonoBehaviour
 {
-    public XRInputManager XRInputManager;
-    public GameObject Head;
-    public GameObject Chest;
-    public GameObject Fender;
-    public ConfigurableJoint Spine;
+    public ConfigurableJoint SpineJoint;
 
-    public JumpController JumpController;
-    // public CrouchController CrouchController;
+    public float verticalOffset;
+    public float minTarget;
+    public float maxTarget;
 
-    private float verticalOffset;
-    // private float spineTarget;
+    private PhysicsRig PhysicsRig;
+    private XRInputManager XRInputManager;
+    private GameObject Head;
+    private GameObject Chest;
+    private GameObject Fender;
 
     void Awake()
     {
+        PhysicsRig = GetComponent<PhysicsRig>();
+        XRInputManager = PhysicsRig.XRInputManager;
+
+        Head = PhysicsRig.Head;
+        Chest = PhysicsRig.Chest;
+        Fender = PhysicsRig.Fender;
+
         verticalOffset = Fender.transform.position.y + (Head.transform.position.y - Chest.transform.position.y);
+        minTarget = PhysicsRig.MinCrouchHeight - verticalOffset;
+        maxTarget = PhysicsRig.MaxCrouchHeight - verticalOffset;
     }
 
     void FixedUpdate()
     {
-        SetSpineTargetPosition(XRInputManager.CameraControllerPosition.y);
+        if (!PhysicsRig.isCrouching && !PhysicsRig.isTiptoeing && !PhysicsRig.isJumping)
+            SetSpineTargetPosition(XRInputManager.CameraControllerPosition.y);
     }
 
-    private void SetSpineTargetPosition(float spineTarget)
+    public void SetSpineTargetPosition(float height)
     {
-        float target = spineTarget - verticalOffset;
-        Spine.targetPosition = new Vector3(0, target, 0);
+        float target = Mathf.Clamp(height - verticalOffset, minTarget, maxTarget);
+        SpineJoint.targetPosition = new Vector3(0, target, 0);
     }
 }

@@ -1,12 +1,18 @@
 using UnityEngine;
 public class HandsController : MonoBehaviour
 {
-    [Header("Input Manager")]
-    public XRInputManager XRInputManager;
+    private PhysicsRig PhysicsRig;
+    private XRInputManager XRInputManager;
+    private ConfigurableJoint LeftHandJoint;
+    private ConfigurableJoint RightHandJoint;
 
-    [Header("Hand Physics Joints")]
-    public ConfigurableJoint LeftHandJoint;
-    public ConfigurableJoint RightHandJoint;
+    void Awake()
+    {
+        PhysicsRig = GetComponent<PhysicsRig>();
+        XRInputManager = PhysicsRig.XRInputManager;
+        LeftHandJoint = PhysicsRig.LeftHandJoint;
+        RightHandJoint = PhysicsRig.RightHandJoint;
+    }
 
     void FixedUpdate()
     {

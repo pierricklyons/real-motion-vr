@@ -887,7 +887,7 @@ GameObject:
   - component: {fileID: 706549910}
   - component: {fileID: 706549909}
   m_Layer: 7
-  m_Name: Left Hand Physics
+  m_Name: Left Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1220,8 +1220,10 @@ GameObject:
   - component: {fileID: 790499309}
   - component: {fileID: 790499314}
   - component: {fileID: 790499310}
-  - component: {fileID: 790499311}
   - component: {fileID: 790499313}
+  - component: {fileID: 790499311}
+  - component: {fileID: 790499316}
+  - component: {fileID: 790499317}
   m_Layer: 7
   m_Name: Physics Rig
   m_TagString: Untagged
@@ -1263,13 +1265,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5646db992340941b9a1a2d20145691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  XRInputManager: {fileID: 1977701894}
-  Sphere: {fileID: 587542591}
-  movementTorqueMultiplier: 5
   Kp: 500
   Ki: 1
   Kd: 10
-  lastError: {x: 0, y: 0, z: 0}
 --- !u!114 &790499311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1282,12 +1280,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80beed3bd7b22e409540b6a0a000e0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  XRInputManager: {fileID: 1977701894}
-  Head: {fileID: 1434652848}
-  Chest: {fileID: 759385253}
-  Fender: {fileID: 979376220}
-  Spine: {fileID: 979376228}
-  JumpController: {fileID: 0}
+  SpineJoint: {fileID: 979376228}
+  verticalOffset: 0
+  minHeight: 0
+  maxHeight: 0
 --- !u!114 &790499313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1300,9 +1296,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef540c4045d68824583e9fb6cf818783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  XRInputManager: {fileID: 1977701894}
-  LeftHandJoint: {fileID: 1434652855}
-  RightHandJoint: {fileID: 1434652854}
 --- !u!114 &790499314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1315,11 +1308,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa224473c884f424a946113403d61843, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  XRInputManager: {fileID: 0}
-  MovementController: {fileID: 0}
-  HandsController: {fileID: 0}
-  SpineController: {fileID: 0}
-  JumpController: {fileID: 0}
+  XRInputManager: {fileID: 1977701894}
+  Head: {fileID: 1434652848}
+  LeftHand: {fileID: 706549908}
+  RightHand: {fileID: 1988796941}
+  Chest: {fileID: 759385253}
+  Fender: {fileID: 979376220}
+  Sphere: {fileID: 587542591}
+  LeftHandJoint: {fileID: 1434652855}
+  RightHandJoint: {fileID: 1434652854}
+  SpineJoint: {fileID: 979376228}
+  MovementSpeed: 3
+  MinCrouchHeight: 1
+  MaxCrouchHeight: 1.8
+  JumpPreloadForce: 1
+  JumpReleaseForce: 2
+  isCrouching: 0
+  isTiptoeing: 0
+  isJumping: 0
+--- !u!114 &790499316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790499308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5709b9dca26ae84c9b6c5a1c8dda621, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &790499317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790499308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfa331f069206db448e93b6de69daf97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &859643566
 GameObject:
   m_ObjectHideFlags: 0
@@ -1938,7 +1968,7 @@ ConfigurableJoint:
   m_ConnectedBody: {fileID: 1988796942}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 1, y: 0, z: 0}
+  m_Axis: {x: 0, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 0
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
@@ -2034,7 +2064,7 @@ ConfigurableJoint:
   m_ConnectedBody: {fileID: 706549909}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 1, y: 0, z: 0}
+  m_Axis: {x: 0, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 0
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
@@ -2606,7 +2636,7 @@ GameObject:
   - component: {fileID: 1988796943}
   - component: {fileID: 1988796942}
   m_Layer: 7
-  m_Name: Right Hand Physics
+  m_Name: Right Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

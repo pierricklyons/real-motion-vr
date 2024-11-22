@@ -1,37 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Unity.XR.CoreUtils;
 
 public class MovementController : MonoBehaviour
 {
-    public XRInputManager XRInputManager;
-    public GameObject Sphere;
-    public float movementTorqueMultiplier = 5;
-
     public float Kp = 2f;
     public float Ki = 0.1f;
     public float Kd = 0.5f;
 
+    private PhysicsRig PhysicsRig;
+    private XRInputManager XRInputManager;
+    private GameObject Sphere;
+    private float movementTorqueMultiplier;
+
     private Rigidbody sphereRigidbody;
     private float sphereRadius;
 
-    public Vector3 lastError;
+    private Vector3 lastError;
     private Vector3 integralError;
 
+    private Vector3 targetPosition;
     private Vector3 lastCameraPosition;
     private Vector3 lastSpherePosition;
 
-    private Vector3 targetPosition;
-
     void Awake()
     {
+        PhysicsRig = GetComponent<PhysicsRig>();
+        XRInputManager = PhysicsRig.XRInputManager;
+        Sphere = PhysicsRig.Sphere;
+        movementTorqueMultiplier = PhysicsRig.MovementSpeed;
+
         sphereRigidbody = Sphere.GetComponent<Rigidbody>();
         sphereRadius = Sphere.GetComponent<SphereCollider>().radius * Sphere.transform.localScale.x;
 
-        lastCameraPosition = XRInputManager.CameraControllerPosition;
         targetPosition = Sphere.transform.position;
 
+        lastCameraPosition = XRInputManager.CameraControllerPosition;
         lastSpherePosition = sphereRigidbody.position;
     }
 
