@@ -38,10 +38,9 @@ public class JumpController : MonoBehaviour
 
     void JumpPreload()
     {
-        float minCrouchTarget = SpineController.minTarget - (XRInputManager.CameraControllerPosition.y - SpineController.verticalOffset);
-        float maxCrouchTarget = SpineController.maxTarget - (XRInputManager.CameraControllerPosition.y - SpineController.verticalOffset);
+        float minJumpPreloadTarget = SpineController.minTarget - (XRInputManager.CameraControllerPosition.y - SpineController.verticalOffset);
 
-        jumpPreloadOffset = Mathf.Clamp(jumpPreloadOffset - jumpPreloadForce * Time.fixedDeltaTime, minCrouchTarget, maxCrouchTarget);
+        jumpPreloadOffset = Mathf.Max(jumpPreloadOffset - jumpPreloadForce * Time.fixedDeltaTime, minJumpPreloadTarget);
 
         jumpPreloadTarget = XRInputManager.CameraControllerPosition.y + jumpPreloadOffset;
 

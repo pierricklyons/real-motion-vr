@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class MovementController : MonoBehaviour
 {
-    public float Kp = 2f;
-    public float Ki = 0.1f;
-    public float Kd = 0.5f;
+    public float Kp;
+    public float Ki;
+    public float Kd;
 
     private PhysicsRig PhysicsRig;
     private XRInputManager XRInputManager;
