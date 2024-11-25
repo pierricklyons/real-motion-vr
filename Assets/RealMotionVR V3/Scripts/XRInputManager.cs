@@ -12,13 +12,11 @@ public class XRInputManager : MonoBehaviour
     public InputActionReference RightPrimaryPress;
     public InputActionReference RightSecondaryPress;
 
-    public bool AreControllersInitialized;
-
     public Vector3 CameraControllerPosition;
     public Quaternion CameraControllerRotation;
 
-    public Quaternion LeftHandControllerRotation;
     public Vector3 LeftHandControllerPosition;
+    public Quaternion LeftHandControllerRotation;
 
     public Vector3 RightHandControllerPosition;
     public Quaternion RightHandControllerRotation;
@@ -30,6 +28,8 @@ public class XRInputManager : MonoBehaviour
     public Vector2 RightTranslateAnchorValue;
     public float RightPrimaryValue;
     public float RightSecondaryValue;
+
+    public bool AreControllersInitialized;
 
     void FixedUpdate()
     {
