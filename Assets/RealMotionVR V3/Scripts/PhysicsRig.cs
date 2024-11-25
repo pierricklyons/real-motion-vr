@@ -14,6 +14,7 @@ public class PhysicsRig : MonoBehaviour
     public ConfigurableJoint RightHandJoint;
     public ConfigurableJoint SpineJoint;
 
+    public float RotationSpeed = 1.0f;
     public float MovementSpeed = 5.0f;
     public float MinCrouchHeight = 1.0f;
     public float MaxCrouchHeight = 1.8f;
@@ -23,6 +24,7 @@ public class PhysicsRig : MonoBehaviour
     public bool isCrouching = false;
     public bool isTiptoeing = false;
     public bool isJumping = false;
+    public bool isGrounded = false;
 
     private MovementController MovementController;
     private HandsController HandsController;

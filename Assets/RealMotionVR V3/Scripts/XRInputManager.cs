@@ -5,10 +5,12 @@ using UnityEngine.InputSystem;
 public class XRInputManager : MonoBehaviour
 {
     public ActionBasedController CameraController;
+
     public ActionBasedController LeftHandController;
-    public ActionBasedController RightHandController;
     public InputActionReference LeftPrimaryPress;
     public InputActionReference LeftSecondaryPress;
+
+    public ActionBasedController RightHandController;
     public InputActionReference RightPrimaryPress;
     public InputActionReference RightSecondaryPress;
 
@@ -17,14 +19,12 @@ public class XRInputManager : MonoBehaviour
 
     public Vector3 LeftHandControllerPosition;
     public Quaternion LeftHandControllerRotation;
-
-    public Vector3 RightHandControllerPosition;
-    public Quaternion RightHandControllerRotation;
-
     public Vector2 LeftTranslateAnchorValue;
     public float LeftPrimaryValue;
     public float LeftSecondaryValue;
 
+    public Vector3 RightHandControllerPosition;
+    public Quaternion RightHandControllerRotation;
     public Vector2 RightTranslateAnchorValue;
     public float RightPrimaryValue;
     public float RightSecondaryValue;
@@ -67,14 +67,12 @@ public class XRInputManager : MonoBehaviour
 
         LeftHandControllerPosition = LeftHandController.positionAction.action.ReadValue<Vector3>();
         LeftHandControllerRotation = LeftHandController.rotationAction.action.ReadValue<Quaternion>();
-
-        RightHandControllerPosition = RightHandController.positionAction.action.ReadValue<Vector3>();
-        RightHandControllerRotation = RightHandController.rotationAction.action.ReadValue<Quaternion>();
-
         LeftTranslateAnchorValue = LeftHandController.translateAnchorAction.action.ReadValue<Vector2>();
         LeftPrimaryValue = LeftPrimaryPress.action.ReadValue<float>();
         LeftSecondaryValue = LeftSecondaryPress.action.ReadValue<float>();
 
+        RightHandControllerPosition = RightHandController.positionAction.action.ReadValue<Vector3>();
+        RightHandControllerRotation = RightHandController.rotationAction.action.ReadValue<Quaternion>();
         RightTranslateAnchorValue = RightHandController.translateAnchorAction.action.ReadValue<Vector2>();
         RightPrimaryValue = RightPrimaryPress.action.ReadValue<float>();
         RightSecondaryValue = RightSecondaryPress.action.ReadValue<float>();

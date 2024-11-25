@@ -23,7 +23,7 @@ public class SpineController : MonoBehaviour
         Chest = PhysicsRig.Chest;
         Fender = PhysicsRig.Fender;
 
-        verticalOffset = Fender.transform.position.y + (Head.transform.position.y - Chest.transform.position.y);
+        verticalOffset = Fender.transform.localPosition.y + (Head.transform.localPosition.y - Chest.transform.localPosition.y);
         minTarget = PhysicsRig.MinCrouchHeight - verticalOffset;
         maxTarget = PhysicsRig.MaxCrouchHeight - verticalOffset;
     }
