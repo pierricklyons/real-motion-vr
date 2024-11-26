@@ -42,7 +42,7 @@ public class JumpController : MonoBehaviour
 
         jumpPreloadOffset = Mathf.Max(jumpPreloadOffset - jumpPreloadForce * Time.fixedDeltaTime, minJumpPreloadTarget);
 
-        jumpPreloadTarget = XRInputManager.CameraControllerPosition.y + jumpPreloadOffset;
+        jumpPreloadTarget = PhysicsRig.Head.transform.localPosition.y + jumpPreloadOffset;
 
         SpineController.SetSpineTargetPosition(jumpPreloadTarget);
     }
