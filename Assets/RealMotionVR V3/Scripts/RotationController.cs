@@ -8,14 +8,13 @@ public class RotationController : MonoBehaviour
 
     void Awake()
     {
-        PhysicsRig = GetComponent<PhysicsRig>();
+        PhysicsRig = GetComponentInChildren<PhysicsRig>();
         XRInputManager = PhysicsRig.XRInputManager;
         rotationSpeed = PhysicsRig.RotationSpeed;
     }
 
     void FixedUpdate()
     {
-        transform.Rotate(0, XRInputManager.RightTranslateAnchorValue.x * rotationSpeed, 0, Space.Self);
+        transform.parent.Rotate(0, XRInputManager.RightTranslateAnchorValue.x * rotationSpeed * Time.fixedDeltaTime, 0, Space.Self);
     }
-
 }

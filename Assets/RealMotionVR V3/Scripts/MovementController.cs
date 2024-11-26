@@ -40,6 +40,7 @@ public class MovementController : MonoBehaviour
     void FixedUpdate()
     {
         UpdateTargetPosition();
+        Debug.Log(targetPosition);
         ApplyPIDControl(targetPosition);
     }
 
@@ -47,8 +48,10 @@ public class MovementController : MonoBehaviour
     {
         Vector3 movementInput = GetMovementInput();
         movementInput = transform.rotation * movementInput;
+
         Vector3 cameraControllerDelta = XRInputManager.CameraControllerPosition - lastCameraPosition;
         cameraControllerDelta = transform.rotation * cameraControllerDelta;
+
         Vector3 externalMovementDelta = sphereRigidbody.position - lastSpherePosition;
 
         targetPosition = sphereRigidbody.position + movementInput + cameraControllerDelta - externalMovementDelta;
