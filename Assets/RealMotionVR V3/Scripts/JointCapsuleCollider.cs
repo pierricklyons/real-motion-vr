@@ -1,8 +1,10 @@
 using UnityEngine;
+
 public class JointCapsuleCollider : MonoBehaviour
 {
     public ConfigurableJoint Joint;
     public CapsuleCollider CapsuleCollider;
+    public Transform MeshTransform; // Reference to the visual mesh's Transform
 
     void Update()
     {
@@ -24,5 +26,17 @@ public class JointCapsuleCollider : MonoBehaviour
 
         // Center the capsule collider between the anchors
         CapsuleCollider.center = transform.InverseTransformPoint((anchorPositionA + anchorPositionB) / 2);
+
+        // Scale and position the visual mesh
+        if (MeshTransform != null)
+        {
+            // Scale the mesh's Y-axis to match the collider's height
+            Vector3 meshScale = MeshTransform.localScale;
+            meshScale.y = adjustedHeight / 2f; // Divide by 2 because capsule height includes both ends
+            MeshTransform.localScale = meshScale;
+
+            // Center the mesh between the anchors
+            MeshTransform.position = (anchorPositionA + anchorPositionB) / 2;
+        }
     }
 }
