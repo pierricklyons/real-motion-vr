@@ -14,7 +14,7 @@ public class PhysicsRig : MonoBehaviour
     public ConfigurableJoint RightHandJoint;
     public ConfigurableJoint SpineJoint;
 
-    public float RotationSpeed = 1.0f;
+    public float RotationSpeed = 180.0f;
     public float MovementSpeed = 5.0f;
     public float MinCrouchHeight = 1.0f;
     public float MaxCrouchHeight = 1.8f;
@@ -26,23 +26,23 @@ public class PhysicsRig : MonoBehaviour
     public bool isJumping = false;
     public bool isGrounded = false;
 
-    private MovementController MovementController;
-    private HandsController HandsController;
-    private SpineController SpineController;
-    private CrouchController CrouchController;
-    private JumpController JumpController;
+    // private MovementController MovementController;
+    // private HandsController HandsController;
+    // private SpineController SpineController;
+    // private CrouchController CrouchController;
+    // private JumpController JumpController;
 
-    void Awake()
-    {
-        InitializeControllerScripts();
-    }
+    // void Awake()
+    // {
+    //     InitializeControllerScripts();
+    // }
 
-    private void InitializeControllerScripts()
-    {
-        MovementController = GetComponent<MovementController>();
-        HandsController = GetComponent<HandsController>();
-        SpineController = GetComponent<SpineController>();
-        CrouchController = GetComponent<CrouchController>();
-        JumpController = GetComponent<JumpController>();
-    }
+    // private void InitializeControllerScripts()
+    // {
+    //     MovementController = GetComponent<MovementController>();
+    //     HandsController = GetComponent<HandsController>();
+    //     SpineController = GetComponent<SpineController>();
+    //     CrouchController = GetComponent<CrouchController>();
+    //     JumpController = GetComponent<JumpController>();
+    // }
 }

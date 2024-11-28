@@ -15,7 +15,7 @@ public class XRInputManager : MonoBehaviour
     public InputActionReference RightSecondaryPress;
 
     public Vector3 CameraControllerPosition;
-    public Quaternion CameraControllerRotation;
+    public Quaternion CameraControllerRotation; //
 
     public Vector3 LeftHandControllerPosition;
     public Quaternion LeftHandControllerRotation;

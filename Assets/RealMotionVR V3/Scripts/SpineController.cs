@@ -2,41 +2,44 @@ using UnityEngine;
 
 public class SpineController : MonoBehaviour
 {
-    public ConfigurableJoint SpineJoint;
+    // public ConfigurableJoint SpineJoint;
 
     public float verticalOffset;
     public float minTarget;
     public float maxTarget;
 
-    private PhysicsRig PhysicsRig;
-    private XRInputManager XRInputManager;
-    private GameObject Head;
-    private GameObject Chest;
-    private GameObject Fender;
+    private PhysicsRig physicsRig;
+    private XRInputManager xrInputManager;
+    private GameObject head;
+    private GameObject chest;
+    private GameObject fender;
+    private ConfigurableJoint spineJoint;
 
     void Awake()
     {
-        PhysicsRig = GetComponent<PhysicsRig>();
-        XRInputManager = PhysicsRig.XRInputManager;
+        physicsRig = GetComponent<PhysicsRig>();
+        xrInputManager = physicsRig.XRInputManager;
 
-        Head = PhysicsRig.Head;
-        Chest = PhysicsRig.Chest;
-        Fender = PhysicsRig.Fender;
+        head = physicsRig.Head;
+        chest = physicsRig.Chest;
+        fender = physicsRig.Fender;
 
-        verticalOffset = Fender.transform.localPosition.y + (Head.transform.localPosition.y - Chest.transform.localPosition.y);
-        minTarget = PhysicsRig.MinCrouchHeight - verticalOffset;
-        maxTarget = PhysicsRig.MaxCrouchHeight - verticalOffset;
+        spineJoint = physicsRig.SpineJoint;
+
+        verticalOffset = fender.transform.localPosition.y + (head.transform.localPosition.y - chest.transform.localPosition.y);
+        minTarget = physicsRig.MinCrouchHeight - verticalOffset;
+        maxTarget = physicsRig.MaxCrouchHeight - verticalOffset;
     }
 
     void FixedUpdate()
     {
-        if (!PhysicsRig.isCrouching && !PhysicsRig.isTiptoeing && !PhysicsRig.isJumping)
-            SetSpineTargetPosition(XRInputManager.CameraControllerPosition.y);
+        if (!physicsRig.isCrouching && !physicsRig.isTiptoeing && !physicsRig.isJumping)
+            SetSpineTargetPosition(xrInputManager.CameraControllerPosition.y);
     }
 
     public void SetSpineTargetPosition(float height)
     {
         float target = Mathf.Clamp(height - verticalOffset, minTarget, maxTarget);
-        SpineJoint.targetPosition = new Vector3(0, target, 0);
+        spineJoint.targetPosition = new Vector3(0, target, 0);
     }
 }

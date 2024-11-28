@@ -1,30 +1,30 @@
 using UnityEngine;
 public class HandsController : MonoBehaviour
 {
-    private PhysicsRig PhysicsRig;
-    private XRInputManager XRInputManager;
-    private ConfigurableJoint LeftHandJoint;
-    private ConfigurableJoint RightHandJoint;
+    private PhysicsRig phyisicsRig;
+    private XRInputManager xrInputManger;
+    private ConfigurableJoint leftHandJoint;
+    private ConfigurableJoint rightHandJoint;
 
     void Awake()
     {
-        PhysicsRig = GetComponent<PhysicsRig>();
-        XRInputManager = PhysicsRig.XRInputManager;
-        LeftHandJoint = PhysicsRig.LeftHandJoint;
-        RightHandJoint = PhysicsRig.RightHandJoint;
+        phyisicsRig = GetComponent<PhysicsRig>();
+        xrInputManger = phyisicsRig.XRInputManager;
+        leftHandJoint = phyisicsRig.LeftHandJoint;
+        rightHandJoint = phyisicsRig.RightHandJoint;
     }
 
     void FixedUpdate()
     {
-        if (!XRInputManager.AreControllersInitialized) return;
+        if (!xrInputManger.AreControllersInitialized) return;
         MoveAndRotateHands();
     }
 
     private void MoveAndRotateHands()
     {
-        LeftHandJoint.targetPosition = XRInputManager.LeftHandControllerPosition - XRInputManager.CameraControllerPosition;
-        RightHandJoint.targetPosition = XRInputManager.RightHandControllerPosition - XRInputManager.CameraControllerPosition;
-        LeftHandJoint.targetRotation = XRInputManager.LeftHandControllerRotation;
-        RightHandJoint.targetRotation = XRInputManager.RightHandControllerRotation;
+        leftHandJoint.targetPosition = xrInputManger.LeftHandControllerPosition - xrInputManger.CameraControllerPosition;
+        rightHandJoint.targetPosition = xrInputManger.RightHandControllerPosition - xrInputManger.CameraControllerPosition;
+        leftHandJoint.targetRotation = xrInputManger.LeftHandControllerRotation;
+        rightHandJoint.targetRotation = xrInputManger.RightHandControllerRotation;
     }
 }

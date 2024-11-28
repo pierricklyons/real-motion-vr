@@ -6,9 +6,9 @@ public class MovementController : MonoBehaviour
     public float Ki;
     public float Kd;
 
-    private PhysicsRig PhysicsRig;
-    private XRInputManager XRInputManager;
-    private GameObject Sphere;
+    private PhysicsRig physicsRig;
+    private XRInputManager xrInputManager;
+    private GameObject sphere;
     private float movementTorqueMultiplier;
 
     private Rigidbody sphereRigidbody;
@@ -23,24 +23,23 @@ public class MovementController : MonoBehaviour
 
     void Awake()
     {
-        PhysicsRig = GetComponent<PhysicsRig>();
-        XRInputManager = PhysicsRig.XRInputManager;
-        Sphere = PhysicsRig.Sphere;
-        movementTorqueMultiplier = PhysicsRig.MovementSpeed;
+        physicsRig = GetComponent<PhysicsRig>();
+        xrInputManager = physicsRig.XRInputManager;
+        sphere = physicsRig.Sphere;
+        movementTorqueMultiplier = physicsRig.MovementSpeed;
 
-        sphereRigidbody = Sphere.GetComponent<Rigidbody>();
-        sphereRadius = Sphere.GetComponent<SphereCollider>().radius * Sphere.transform.localScale.x;
+        sphereRigidbody = sphere.GetComponent<Rigidbody>();
+        sphereRadius = sphere.GetComponent<SphereCollider>().radius * sphere.transform.localScale.x;
 
-        targetPosition = Sphere.transform.position;
+        targetPosition = sphere.transform.position;
 
-        lastCameraPosition = XRInputManager.CameraControllerPosition;
+        lastCameraPosition = xrInputManager.CameraControllerPosition;
         lastSpherePosition = sphereRigidbody.position;
     }
 
     void FixedUpdate()
     {
         UpdateTargetPosition();
-        Debug.Log(targetPosition);
         ApplyPIDControl(targetPosition);
     }
 
@@ -49,21 +48,21 @@ public class MovementController : MonoBehaviour
         Vector3 movementInput = GetMovementInput();
         movementInput = transform.rotation * movementInput;
 
-        Vector3 cameraControllerDelta = XRInputManager.CameraControllerPosition - lastCameraPosition;
+        Vector3 cameraControllerDelta = xrInputManager.CameraControllerPosition - lastCameraPosition;
         cameraControllerDelta = transform.rotation * cameraControllerDelta;
 
         Vector3 externalMovementDelta = sphereRigidbody.position - lastSpherePosition;
 
         targetPosition = sphereRigidbody.position + movementInput + cameraControllerDelta - externalMovementDelta;
 
-        lastCameraPosition = XRInputManager.CameraControllerPosition;
+        lastCameraPosition = xrInputManager.CameraControllerPosition;
         lastSpherePosition = sphereRigidbody.position;
     }
 
     private Vector3 GetMovementInput()
     {
-        Quaternion headYaw = Quaternion.Euler(0, XRInputManager.CameraControllerRotation.eulerAngles.y, 0);
-        Vector3 moveDirection = headYaw * new Vector3(XRInputManager.LeftTranslateAnchorValue.x, 0, XRInputManager.LeftTranslateAnchorValue.y);
+        Quaternion headYaw = Quaternion.Euler(0, xrInputManager.CameraControllerRotation.eulerAngles.y, 0);
+        Vector3 moveDirection = headYaw * new Vector3(xrInputManager.LeftTranslateAnchorValue.x, 0, xrInputManager.LeftTranslateAnchorValue.y);
 
         return moveDirection * Time.fixedDeltaTime * movementTorqueMultiplier;
     }

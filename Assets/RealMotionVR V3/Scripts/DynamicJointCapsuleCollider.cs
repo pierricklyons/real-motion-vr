@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class JointCapsuleCollider : MonoBehaviour
+public class DynamicJointCapsuleCollider : MonoBehaviour
 {
     public ConfigurableJoint Joint;
     public CapsuleCollider CapsuleCollider;

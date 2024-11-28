@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class RotationController : MonoBehaviour
 {
-    private PhysicsRig PhysicsRig;
-    private XRInputManager XRInputManager;
+    private PhysicsRig physicsRig;
+    private XRInputManager xrInputManager;
     private float rotationSpeed;
 
     void Awake()
     {
-        PhysicsRig = GetComponentInChildren<PhysicsRig>();
-        XRInputManager = PhysicsRig.XRInputManager;
-        rotationSpeed = PhysicsRig.RotationSpeed;
+        physicsRig = GetComponentInChildren<PhysicsRig>();
+        xrInputManager = physicsRig.XRInputManager;
+        rotationSpeed = physicsRig.RotationSpeed;
     }
 
     void FixedUpdate()
     {
-        transform.parent.Rotate(0, XRInputManager.RightTranslateAnchorValue.x * rotationSpeed * Time.fixedDeltaTime, 0, Space.Self);
+        if (xrInputManager.RightTranslateAnchorValue.x != 0) transform.parent.Rotate(0, xrInputManager.RightTranslateAnchorValue.x * rotationSpeed * Time.fixedDeltaTime, 0, Space.Self);
     }
 }

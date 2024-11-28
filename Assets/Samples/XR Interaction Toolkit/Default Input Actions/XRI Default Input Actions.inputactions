@@ -171,24 +171,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "LeftTrackPadPressed",
-                    "type": "Value",
-                    "id": "c8e311aa-cf76-44fe-9d6b-9103d5f8358d",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "LeftTrackPadTouched",
-                    "type": "Value",
-                    "id": "30449275-d2c6-4d86-b035-3455d86a766d",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "LeftPrimaryPressed",
                     "type": "Value",
                     "id": "cc7bca93-ddcc-4f22-a17d-c04ef2032073",
@@ -375,28 +357,6 @@
                 },
                 {
                     "name": "",
-                    "id": "a644b210-ba5b-4689-9944-df49dbc02470",
-                    "path": "<XRInputV1::Oculus::OculusTouchControllerOpenXR>{LeftHand}/thumbstickclicked",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Generic XR Controller",
-                    "action": "LeftTrackPadPressed",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d3813734-970c-47df-9ea3-056ccb28c56d",
-                    "path": "<XRInputV1::Oculus::OculusTouchControllerOpenXR>{LeftHand}/thumbsticktouched",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Generic XR Controller",
-                    "action": "LeftTrackPadTouched",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "b836dff7-0d68-44eb-abdc-4c0cccec74bc",
                     "path": "<XRInputV1::Oculus::OculusTouchControllerOpenXR>{LeftHand}/primaryButton",
                     "interactions": "",
@@ -536,24 +496,6 @@
                     "type": "Value",
                     "id": "6f7cf253-7062-443b-b10f-2be48a33f027",
                     "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "RightTrackPadPressed",
-                    "type": "Value",
-                    "id": "8ece2bca-0015-4fef-bd5d-c3129eab3107",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "RightTrackPadTouched",
-                    "type": "Value",
-                    "id": "ab8225ed-6d8c-4b30-b926-11d27ab8fdde",
-                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -740,28 +682,6 @@
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "Haptic Device",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "266b1cae-2f93-447b-b52a-1493b77f0e09",
-                    "path": "<XRInputV1::Oculus::OculusTouchControllerOpenXR>{RightHand}/thumbstickclicked",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Generic XR Controller",
-                    "action": "RightTrackPadPressed",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4985d654-c5ca-4c48-a447-15a6954c334a",
-                    "path": "<XRInputV1::Oculus::OculusTouchControllerOpenXR>{RightHand}/thumbsticktouched",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Generic XR Controller",
-                    "action": "RightTrackPadTouched",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

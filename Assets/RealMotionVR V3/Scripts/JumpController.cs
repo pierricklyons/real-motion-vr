@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class JumpController : MonoBehaviour
 {
-    private PhysicsRig PhysicsRig;
-    private XRInputManager XRInputManager;
-    private SpineController SpineController;
+    private PhysicsRig physicsRig;
+    private XRInputManager xrInputManger;
+    private SpineController spineController;
 
     private float jumpPreloadForce;
     private float jumpReleaseForce;
@@ -14,42 +14,42 @@ public class JumpController : MonoBehaviour
 
     void Awake()
     {
-        PhysicsRig = GetComponent<PhysicsRig>();
-        XRInputManager = PhysicsRig.XRInputManager;
-        SpineController = GetComponent<SpineController>();
+        physicsRig = GetComponent<PhysicsRig>();
+        xrInputManger = physicsRig.XRInputManager;
+        spineController = GetComponent<SpineController>();
 
-        jumpPreloadForce = PhysicsRig.JumpPreloadForce;
-        jumpReleaseForce = PhysicsRig.JumpReleaseForce;
+        jumpPreloadForce = physicsRig.JumpPreloadForce;
+        jumpReleaseForce = physicsRig.JumpReleaseForce;
     }
 
     void FixedUpdate()
     {
-        if (XRInputManager.RightPrimaryValue == 1)
+        if (xrInputManger.RightPrimaryValue == 1)
         {
-            PhysicsRig.isJumping = true;
+            physicsRig.isJumping = true;
             JumpPreload();
         }
-        if (PhysicsRig.isJumping && XRInputManager.RightPrimaryValue == 0)
+        if (physicsRig.isJumping && xrInputManger.RightPrimaryValue == 0)
         {
-            PhysicsRig.isJumping = false;
+            physicsRig.isJumping = false;
             JumpRelease();
         }
     }
 
     void JumpPreload()
     {
-        float minJumpPreloadTarget = SpineController.minTarget - (XRInputManager.CameraControllerPosition.y - SpineController.verticalOffset);
+        float minJumpPreloadTarget = spineController.minTarget - (xrInputManger.CameraControllerPosition.y - spineController.verticalOffset);
 
         jumpPreloadOffset = Mathf.Max(jumpPreloadOffset - jumpPreloadForce * Time.fixedDeltaTime, minJumpPreloadTarget);
 
-        jumpPreloadTarget = PhysicsRig.Head.transform.localPosition.y + jumpPreloadOffset;
+        jumpPreloadTarget = physicsRig.Head.transform.localPosition.y + jumpPreloadOffset;
 
-        SpineController.SetSpineTargetPosition(jumpPreloadTarget);
+        spineController.SetSpineTargetPosition(jumpPreloadTarget);
     }
 
     void JumpRelease()
     {
         jumpPreloadOffset = 0;
-        SpineController.SetSpineTargetPosition(PhysicsRig.MaxCrouchHeight + jumpReleaseForce * Time.fixedDeltaTime);
+        spineController.SetSpineTargetPosition(physicsRig.MaxCrouchHeight + jumpReleaseForce * Time.fixedDeltaTime);
     }
 }
