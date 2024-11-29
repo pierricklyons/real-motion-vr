@@ -29,6 +29,7 @@ public class JumpController : MonoBehaviour
             physicsRig.isJumping = true;
             JumpPreload();
         }
+
         if (physicsRig.isJumping && xrInputManger.RightPrimaryValue == 0)
         {
             physicsRig.isJumping = false;

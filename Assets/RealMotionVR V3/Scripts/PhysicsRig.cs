@@ -10,6 +10,7 @@ public class PhysicsRig : MonoBehaviour
     public GameObject Fender;
     public GameObject Sphere;
 
+    public ConfigurableJoint HeadJoint;
     public ConfigurableJoint LeftHandJoint;
     public ConfigurableJoint RightHandJoint;
     public ConfigurableJoint SpineJoint;

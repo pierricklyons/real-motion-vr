@@ -15,19 +15,23 @@ public class XRInputManager : MonoBehaviour
     public InputActionReference RightSecondaryPress;
 
     public Vector3 CameraControllerPosition;
-    public Quaternion CameraControllerRotation; //
+    public Quaternion CameraControllerRotation;
 
     public Vector3 LeftHandControllerPosition;
     public Quaternion LeftHandControllerRotation;
     public Vector2 LeftTranslateAnchorValue;
     public float LeftPrimaryValue;
     public float LeftSecondaryValue;
+    public float LeftActivateValue;
+    public float LeftSelectValue;
 
     public Vector3 RightHandControllerPosition;
     public Quaternion RightHandControllerRotation;
     public Vector2 RightTranslateAnchorValue;
     public float RightPrimaryValue;
     public float RightSecondaryValue;
+    public float RightActivateValue;
+    public float RightSelectValue;
 
     public bool AreControllersInitialized;
 
@@ -70,11 +74,15 @@ public class XRInputManager : MonoBehaviour
         LeftTranslateAnchorValue = LeftHandController.translateAnchorAction.action.ReadValue<Vector2>();
         LeftPrimaryValue = LeftPrimaryPress.action.ReadValue<float>();
         LeftSecondaryValue = LeftSecondaryPress.action.ReadValue<float>();
+        LeftActivateValue = LeftHandController.activateAction.action.ReadValue<float>();
+        LeftSelectValue = LeftHandController.selectAction.action.ReadValue<float>();
 
         RightHandControllerPosition = RightHandController.positionAction.action.ReadValue<Vector3>();
         RightHandControllerRotation = RightHandController.rotationAction.action.ReadValue<Quaternion>();
         RightTranslateAnchorValue = RightHandController.translateAnchorAction.action.ReadValue<Vector2>();
         RightPrimaryValue = RightPrimaryPress.action.ReadValue<float>();
         RightSecondaryValue = RightSecondaryPress.action.ReadValue<float>();
+        RightActivateValue = RightHandController.activateAction.action.ReadValue<float>();
+        RightSelectValue = RightHandController.selectAction.action.ReadValue<float>();
     }
 }

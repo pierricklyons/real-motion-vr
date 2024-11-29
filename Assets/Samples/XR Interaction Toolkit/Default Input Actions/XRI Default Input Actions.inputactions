@@ -306,7 +306,7 @@
                     "path": "<XRController>{LeftHand}/Primary2DAxis",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Generic XR Controller;Continuous Move",
+                    "groups": "Generic XR Controller",
                     "action": "Translate Anchor",
                     "isComposite": false,
                     "isPartOfComposite": false
