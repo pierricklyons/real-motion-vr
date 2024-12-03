@@ -6,17 +6,17 @@ public class CrouchController : MonoBehaviour
     private XRInputManager xrInputManager;
     private SpineController spineController;
 
-    private float crouchOffset;
+    public float crouchOffset;
     private float crouchTarget;
 
-    void Awake()
+    private void Awake()
     {
         physicsRig = GetComponent<PhysicsRig>();
         xrInputManager = physicsRig.XRInputManager;
         spineController = GetComponent<SpineController>();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (physicsRig.isJumping) return;
 
@@ -26,13 +26,20 @@ public class CrouchController : MonoBehaviour
         float inputY = xrInputManager.RightTranslateAnchorValue.y;
         crouchOffset = Mathf.Clamp(crouchOffset + inputY * Time.fixedDeltaTime, minCrouchTarget, maxCrouchTarget);
 
-        physicsRig.isCrouching = crouchOffset < 0;
-        physicsRig.isTiptoeing = crouchOffset > 0 && inputY != 0;
+        physicsRig.isCrouching = crouchOffset < 0 && physicsRig.Head.transform.position.y < physicsRig.UserHeight;
+        physicsRig.isTiptoeing = crouchOffset > 0 && physicsRig.Head.transform.position.y > physicsRig.UserHeight;
 
-        if (crouchOffset > 0 && !physicsRig.isTiptoeing) crouchOffset = 0;
+        // if (crouchOffset > 0 && !physicsRig.isTiptoeing) crouchOffset = 0;
+
+        // physicsRig.isCrouching = physicsRig.Head.transform.position.y + 0.05f < physicsRig.UserHeight;
+        // physicsRig.isTiptoeing = physicsRig.Head.transform.position.y - 0.05f > physicsRig.UserHeight;
+
+        if (xrInputManager.RightSecondaryValue == 1) crouchOffset = 0;
+        // if (physicsRig.Head.transform.position.y > physicsRig.UserHeight && inputY == 0)
 
         crouchTarget = xrInputManager.CameraControllerPosition.y + crouchOffset;
 
-        if (physicsRig.isCrouching || physicsRig.isTiptoeing) spineController.SetSpineTargetPosition(crouchTarget);
+        if (physicsRig.Head.transform.position.y > physicsRig.UserHeight && inputY == 0) crouchTarget = physicsRig.UserHeight;
+        if (crouchOffset != 0) spineController.SetSpineTargetPosition(crouchTarget);
     }
 }

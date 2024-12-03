@@ -21,7 +21,7 @@ public class MovementController : MonoBehaviour
     private Vector3 lastCameraPosition;
     private Vector3 lastSpherePosition;
 
-    void Awake()
+    private void Awake()
     {
         physicsRig = GetComponent<PhysicsRig>();
         xrInputManager = physicsRig.XRInputManager;
@@ -37,8 +37,9 @@ public class MovementController : MonoBehaviour
         lastSpherePosition = sphereRigidbody.position;
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
+        // if (!physicsRig.isGrounded) return;
         UpdateTargetPosition();
         ApplyPIDControl(targetPosition);
     }

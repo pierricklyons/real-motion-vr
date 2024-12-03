@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class SpineController : MonoBehaviour
 {
-    // public ConfigurableJoint SpineJoint;
-
     public float verticalOffset;
     public float minTarget;
     public float maxTarget;
@@ -33,8 +31,9 @@ public class SpineController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!physicsRig.isCrouching && !physicsRig.isTiptoeing && !physicsRig.isJumping)
-            SetSpineTargetPosition(xrInputManager.CameraControllerPosition.y);
+        minTarget = physicsRig.MinCrouchHeight - verticalOffset;
+        maxTarget = physicsRig.MaxCrouchHeight - verticalOffset;
+        if (!physicsRig.isCrouching && !physicsRig.isTiptoeing && !physicsRig.isJumping) SetSpineTargetPosition(xrInputManager.CameraControllerPosition.y);
     }
 
     public void SetSpineTargetPosition(float height)
