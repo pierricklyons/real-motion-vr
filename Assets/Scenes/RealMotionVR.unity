@@ -1790,10 +1790,13 @@ MonoBehaviour:
   RotationSpeed: 180
   MovementSpeed: 3
   UserHeight: 1.75
-  MinCrouchHeight: 1
-  MaxCrouchHeight: 1.8
+  TiptoeHeightPercentage: 107.5
+  CrouchHeightPercentage: 60
+  MaxTiptoeHeight: 0
+  MinCrouchHeight: 0
   JumpPreloadForce: 1
   JumpReleaseForce: 1
+  CrouchAndTiptoeTriggerThreshold: 0.025
   isCrouching: 0
   isTiptoeing: 0
   isJumping: 0
@@ -1810,6 +1813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5709b9dca26ae84c9b6c5a1c8dda621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crouchOffset: 0
 --- !u!114 &790499317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1841,11 +1845,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 790499308}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f0ba98d5770d5f4f8d3c876c50aaeeb, type: 3}
+  m_Script: {fileID: 11500000, guid: e1e6bd14a24f3ec4dbfe0bad79fc4f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputHoldDeltaThreshold: 0.5
 --- !u!1 &792048677
 GameObject:
   m_ObjectHideFlags: 0

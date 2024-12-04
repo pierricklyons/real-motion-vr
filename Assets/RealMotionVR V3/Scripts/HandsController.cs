@@ -6,7 +6,7 @@ public class HandsController : MonoBehaviour
     private ConfigurableJoint leftHandJoint;
     private ConfigurableJoint rightHandJoint;
 
-    void Awake()
+    private void Awake()
     {
         phyisicsRig = GetComponent<PhysicsRig>();
         xrInputManger = phyisicsRig.XRInputManager;
@@ -14,7 +14,7 @@ public class HandsController : MonoBehaviour
         rightHandJoint = phyisicsRig.RightHandJoint;
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (!xrInputManger.AreControllersInitialized) return;
         MoveAndRotateHands();

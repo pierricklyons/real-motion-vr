@@ -6,14 +6,14 @@ public class HeadController : MonoBehaviour
     private XRInputManager xrInputManager;
     private ConfigurableJoint headJoint;
 
-    void Awake()
+    private void Awake()
     {
         physicsRig = GetComponent<PhysicsRig>();
         xrInputManager = physicsRig.XRInputManager;
         headJoint = physicsRig.HeadJoint;
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         headJoint.targetRotation = xrInputManager.CameraControllerRotation;
     }

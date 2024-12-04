@@ -26,20 +26,15 @@ public class CrouchController : MonoBehaviour
         float inputY = xrInputManager.RightTranslateAnchorValue.y;
         crouchOffset = Mathf.Clamp(crouchOffset + inputY * Time.fixedDeltaTime, minCrouchTarget, maxCrouchTarget);
 
-        physicsRig.isCrouching = crouchOffset < 0 && physicsRig.Head.transform.position.y < physicsRig.UserHeight;
-        physicsRig.isTiptoeing = crouchOffset > 0 && physicsRig.Head.transform.position.y > physicsRig.UserHeight;
-
-        // if (crouchOffset > 0 && !physicsRig.isTiptoeing) crouchOffset = 0;
-
-        // physicsRig.isCrouching = physicsRig.Head.transform.position.y + 0.05f < physicsRig.UserHeight;
-        // physicsRig.isTiptoeing = physicsRig.Head.transform.position.y - 0.05f > physicsRig.UserHeight;
+        physicsRig.isCrouching = physicsRig.Head.transform.position.y < physicsRig.UserHeight - physicsRig.CrouchAndTiptoeTriggerThreshold;
+        physicsRig.isTiptoeing = physicsRig.Head.transform.position.y > physicsRig.UserHeight + physicsRig.CrouchAndTiptoeTriggerThreshold;
 
         if (xrInputManager.RightSecondaryValue == 1) crouchOffset = 0;
-        // if (physicsRig.Head.transform.position.y > physicsRig.UserHeight && inputY == 0)
+
+        if (physicsRig.isTiptoeing && crouchOffset > 0 && inputY == 0) crouchOffset = physicsRig.UserHeight - xrInputManager.CameraControllerPosition.y;
 
         crouchTarget = xrInputManager.CameraControllerPosition.y + crouchOffset;
 
-        if (physicsRig.Head.transform.position.y > physicsRig.UserHeight && inputY == 0) crouchTarget = physicsRig.UserHeight;
-        if (crouchOffset != 0) spineController.SetSpineTargetPosition(crouchTarget);
+        spineController.SetSpineTargetPosition(crouchTarget);
     }
 }

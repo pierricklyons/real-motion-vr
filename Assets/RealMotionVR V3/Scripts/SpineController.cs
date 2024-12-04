@@ -13,7 +13,7 @@ public class SpineController : MonoBehaviour
     private GameObject fender;
     private ConfigurableJoint spineJoint;
 
-    void Awake()
+    private void Awake()
     {
         physicsRig = GetComponent<PhysicsRig>();
         xrInputManager = physicsRig.XRInputManager;
@@ -26,13 +26,13 @@ public class SpineController : MonoBehaviour
 
         verticalOffset = fender.transform.localPosition.y + (head.transform.localPosition.y - chest.transform.localPosition.y);
         minTarget = physicsRig.MinCrouchHeight - verticalOffset;
-        maxTarget = physicsRig.MaxCrouchHeight - verticalOffset;
+        maxTarget = physicsRig.MaxTiptoeHeight - verticalOffset;
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         minTarget = physicsRig.MinCrouchHeight - verticalOffset;
-        maxTarget = physicsRig.MaxCrouchHeight - verticalOffset;
+        maxTarget = physicsRig.MaxTiptoeHeight - verticalOffset;
         if (!physicsRig.isCrouching && !physicsRig.isTiptoeing && !physicsRig.isJumping) SetSpineTargetPosition(xrInputManager.CameraControllerPosition.y);
     }
 

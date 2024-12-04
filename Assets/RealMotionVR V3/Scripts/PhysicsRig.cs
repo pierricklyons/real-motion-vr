@@ -18,10 +18,14 @@ public class PhysicsRig : MonoBehaviour
     public float RotationSpeed = 180.0f;
     public float MovementSpeed = 5.0f;
     public float UserHeight = 1.75f;
+    public float TiptoeHeightPercentage = 7.5f;
+    public float CrouchHeightPercentage = 60.0f;
+    public float MaxTiptoeHeight;
     public float MinCrouchHeight;
-    public float MaxCrouchHeight;
     public float JumpPreloadForce = 1.0f;
-    public float JumpReleaseForce = 2.0f;
+    public float JumpReleaseForce = 1.0f;
+
+    public float CrouchAndTiptoeTriggerThreshold = 0.025f;
 
     public bool isCrouching = false;
     public bool isTiptoeing = false;
@@ -34,25 +38,6 @@ public class PhysicsRig : MonoBehaviour
     // private CrouchController CrouchController;
     // private JumpController JumpController;
 
-    private float inputHoldTime = 0f; // Tracks how long the input is held
-    private float holdThreshold = 0.5f; // Minimum time (in seconds) to register a hold
-
-    void Awake()
-    {
-        MinCrouchHeight = 0.5f * UserHeight;
-        MaxCrouchHeight = UserHeight + 0.075f * UserHeight;
-    }
-
-    void FixedUpdate()
-    {
-        if (XRInputManager.RightSecondaryValue == 1)
-        {
-            inputHoldTime += Time.deltaTime;
-            if (inputHoldTime >= holdThreshold) SetRigHeights();
-        }
-        else inputHoldTime = 0f;
-    }
-
     // private void InitializeControllerScripts()
     // {
     //     MovementController = GetComponent<MovementController>();
@@ -61,11 +46,4 @@ public class PhysicsRig : MonoBehaviour
     //     CrouchController = GetComponent<CrouchController>();
     //     JumpController = GetComponent<JumpController>();
     // }
-
-    public void SetRigHeights()
-    {
-        UserHeight = XRInputManager.CameraControllerPosition.y;
-        MinCrouchHeight = 0.5f * UserHeight;
-        MaxCrouchHeight = UserHeight + 0.075f * UserHeight;
-    }
 }

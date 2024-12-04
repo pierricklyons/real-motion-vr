@@ -6,7 +6,7 @@ public class DynamicJointCapsuleCollider : MonoBehaviour
     public CapsuleCollider CapsuleCollider;
     public Transform MeshTransform; // Reference to the visual mesh's Transform
 
-    void Update()
+    private void Update()
     {
         // Calculate the world positions of the joint's anchor points
         Vector3 anchorPositionA = Joint.transform.TransformPoint(Joint.anchor);

@@ -12,7 +12,7 @@ public class JumpController : MonoBehaviour
     private float jumpPreloadOffset;
     private float jumpPreloadTarget;
 
-    void Awake()
+    private void Awake()
     {
         physicsRig = GetComponent<PhysicsRig>();
         xrInputManger = physicsRig.XRInputManager;
@@ -22,7 +22,7 @@ public class JumpController : MonoBehaviour
         jumpReleaseForce = physicsRig.JumpReleaseForce;
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (xrInputManger.RightPrimaryValue == 1)
         {
@@ -37,7 +37,7 @@ public class JumpController : MonoBehaviour
         }
     }
 
-    void JumpPreload()
+    private void JumpPreload()
     {
         float minJumpPreloadTarget = spineController.minTarget - (xrInputManger.CameraControllerPosition.y - spineController.verticalOffset);
 
@@ -48,9 +48,9 @@ public class JumpController : MonoBehaviour
         spineController.SetSpineTargetPosition(jumpPreloadTarget);
     }
 
-    void JumpRelease()
+    private void JumpRelease()
     {
         jumpPreloadOffset = 0;
-        spineController.SetSpineTargetPosition(physicsRig.MaxCrouchHeight + jumpReleaseForce * Time.fixedDeltaTime);
+        spineController.SetSpineTargetPosition(physicsRig.MaxTiptoeHeight + jumpReleaseForce * Time.fixedDeltaTime);
     }
 }
