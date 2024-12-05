@@ -2,12 +2,8 @@ using UnityEngine;
 
 public class RotationController : MonoBehaviour
 {
-    // public GameObject ParentGameObject;
-    // private Rigidbody parentRigidbody;
-
     private PhysicsRig physicsRig;
     private XRInputManager xrInputManager;
-    private GameObject fender;
     private Rigidbody fenderRigidbody;
     private float rotationSpeed;
 
@@ -16,9 +12,7 @@ public class RotationController : MonoBehaviour
         physicsRig = GetComponentInChildren<PhysicsRig>();
         xrInputManager = physicsRig.XRInputManager;
 
-        // parentRigidbody = ParentGameObject.GetComponent<Rigidbody>();
-        fender = physicsRig.Fender;
-        fenderRigidbody = fender.GetComponent<Rigidbody>();
+        fenderRigidbody = physicsRig.Fender.GetComponent<Rigidbody>();
         rotationSpeed = physicsRig.RotationSpeed;
     }
 
