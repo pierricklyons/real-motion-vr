@@ -35,7 +35,7 @@ public class XRInputManager : MonoBehaviour
 
     public bool AreControllersInitialized;
 
-    private void FixedUpdate()
+    private void Update()
     {
         GetControllerInputs();
 

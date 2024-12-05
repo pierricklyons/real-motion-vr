@@ -24,6 +24,7 @@ public class JumpController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!physicsRig.isGrounded) return;
         if (xrInputManger.RightPrimaryValue == 1)
         {
             physicsRig.isJumping = true;

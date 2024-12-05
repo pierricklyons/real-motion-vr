@@ -166,7 +166,7 @@
                     "type": "Value",
                     "id": "bfa204c7-3c92-4193-bad1-39eb71920042",
                     "expectedControlType": "Vector2",
-                    "processors": "StickDeadzone(min=0.15,max=1)",
+                    "processors": "StickDeadzone(min=0.25,max=1)",
                     "interactions": "",
                     "initialStateCheck": true
                 },
@@ -496,7 +496,7 @@
                     "type": "Value",
                     "id": "6f7cf253-7062-443b-b10f-2be48a33f027",
                     "expectedControlType": "Vector2",
-                    "processors": "StickDeadzone(min=0.15,max=1)",
+                    "processors": "StickDeadzone(min=0.25,max=1)",
                     "interactions": "",
                     "initialStateCheck": true
                 },

@@ -2668,8 +2668,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_YDrive:
     serializedVersion: 3
-    positionSpring: 5000
-    positionDamper: 50
+    positionSpring: 10000
+    positionDamper: 200
     maximumForce: 3.4028233e+38
   m_ZDrive:
     serializedVersion: 3

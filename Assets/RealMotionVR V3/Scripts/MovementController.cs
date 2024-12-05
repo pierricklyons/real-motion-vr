@@ -39,7 +39,6 @@ public class MovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // if (!physicsRig.isGrounded) return;
         UpdateTargetPosition();
         ApplyPIDControl(targetPosition);
     }
