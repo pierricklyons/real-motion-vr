@@ -7,7 +7,7 @@ public class CrouchController : MonoBehaviour
     private SpineController spineController;
 
     public float crouchOffset;
-    private float crouchTarget;
+    public float crouchTarget;
 
     private void Awake()
     {

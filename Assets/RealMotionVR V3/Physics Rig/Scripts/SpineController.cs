@@ -3,6 +3,7 @@ using UnityEngine;
 public class SpineController : MonoBehaviour
 {
     public float verticalOffset;
+    public float TargetPosition;
     public float minTarget;
     public float maxTarget;
 
@@ -38,6 +39,7 @@ public class SpineController : MonoBehaviour
 
     public void SetSpineTargetPosition(float height)
     {
+        TargetPosition = height;
         float target = Mathf.Clamp(height - verticalOffset, minTarget, maxTarget);
         spineJoint.targetPosition = new Vector3(0, target, 0);
     }

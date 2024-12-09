@@ -9,8 +9,11 @@ public class JumpController : MonoBehaviour
     private float jumpPreloadForce;
     private float jumpReleaseForce;
 
-    private float jumpPreloadOffset;
-    private float jumpPreloadTarget;
+    public float jumpPreloadOffset;
+    public float jumpPreloadTarget;
+
+    private float previousHeight;
+    private float verticalVelocity;
 
     private void Awake()
     {
@@ -24,7 +27,12 @@ public class JumpController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!physicsRig.isGrounded) return;
+        // Calculate vertical velocity
+        float currentHeight = physicsRig.Head.transform.position.y; // Or use the monoball position
+        verticalVelocity = (currentHeight - previousHeight) / Time.fixedDeltaTime;
+        previousHeight = currentHeight;
+
+        // if (!physicsRig.isGrounded) return;
         if (xrInputManger.RightPrimaryValue == 1)
         {
             physicsRig.isJumping = true;
@@ -35,6 +43,11 @@ public class JumpController : MonoBehaviour
         {
             physicsRig.isJumping = false;
             JumpRelease();
+        }
+
+        if (!physicsRig.isGrounded && physicsRig.isJumping == false)
+        {
+            Lift(verticalVelocity);
         }
     }
 
@@ -52,6 +65,29 @@ public class JumpController : MonoBehaviour
     private void JumpRelease()
     {
         jumpPreloadOffset = 0;
-        spineController.SetSpineTargetPosition(physicsRig.MaxTiptoeHeight + jumpReleaseForce * Time.fixedDeltaTime);
+        spineController.SetSpineTargetPosition(physicsRig.UserHeight + jumpReleaseForce * Time.fixedDeltaTime);
+    }
+
+    private void Lift(float verticalVelocity)
+    {
+        float targetOffset;
+
+        if (verticalVelocity > 0)
+        {
+            // Moving upward: Tuck legs by lowering target
+            targetOffset = Mathf.Lerp(physicsRig.UserHeight, jumpPreloadTarget, 500f);
+        }
+        else if (verticalVelocity < 0)
+        {
+            // Moving downward: Extend legs back to normal
+            targetOffset = Mathf.Lerp(jumpPreloadTarget, physicsRig.UserHeight, 500);
+        }
+        else
+        {
+            // Maintain the current leg position
+            targetOffset = jumpPreloadTarget;
+        }
+
+        spineController.SetSpineTargetPosition(targetOffset);
     }
 }
