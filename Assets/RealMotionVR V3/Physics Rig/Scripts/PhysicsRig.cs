@@ -18,6 +18,7 @@ public class PhysicsRig : MonoBehaviour
     public float RotationSpeed = 180.0f;
     public float MovementSpeed = 5.0f;
     public float UserHeight = 1.75f;
+    public float CrouchTarget;
     public float TiptoeHeightPercentage = 7.5f;
     public float CrouchHeightPercentage = 60.0f;
     public float MaxTiptoeHeight;
@@ -31,6 +32,11 @@ public class PhysicsRig : MonoBehaviour
     public bool isTiptoeing = false;
     public bool isJumping = false;
     public bool isGrounded = false;
+
+    // private void Awake()
+    // {
+    //     HeightTarget = UserHeight;
+    // }
 
     // private MovementController MovementController;
     // private HandsController HandsController;

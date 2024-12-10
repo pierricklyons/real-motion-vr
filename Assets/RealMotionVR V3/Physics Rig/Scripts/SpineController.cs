@@ -6,6 +6,7 @@ public class SpineController : MonoBehaviour
     public float TargetPosition;
     public float minTarget;
     public float maxTarget;
+    // public float CrouchTarget;
 
     private PhysicsRig physicsRig;
     private XRInputManager xrInputManager;

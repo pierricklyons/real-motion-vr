@@ -7,7 +7,7 @@ public class CrouchController : MonoBehaviour
     private SpineController spineController;
 
     public float crouchOffset;
-    public float crouchTarget;
+    // public float crouchTarget;
 
     private void Awake()
     {
@@ -33,8 +33,8 @@ public class CrouchController : MonoBehaviour
 
         if (physicsRig.isTiptoeing && crouchOffset > 0 && inputY == 0) crouchOffset = physicsRig.UserHeight - xrInputManager.CameraControllerPosition.y;
 
-        crouchTarget = xrInputManager.CameraControllerPosition.y + crouchOffset;
+        physicsRig.CrouchTarget = xrInputManager.CameraControllerPosition.y + crouchOffset;
 
-        spineController.SetSpineTargetPosition(crouchTarget);
+        spineController.SetSpineTargetPosition(physicsRig.CrouchTarget);
     }
 }
