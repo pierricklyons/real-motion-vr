@@ -31,7 +31,7 @@ public class MovementController : MonoBehaviour
         sphereRigidbody = sphere.GetComponent<Rigidbody>();
         sphereRadius = sphere.GetComponent<SphereCollider>().radius * sphere.transform.localScale.x;
 
-        targetPosition = sphere.transform.position;
+        targetPosition = sphereRigidbody.position;
 
         lastCameraPosition = xrInputManager.CameraControllerPosition;
         lastSpherePosition = sphereRigidbody.position;
