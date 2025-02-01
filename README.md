@@ -27,7 +27,7 @@ The user can physically interact and grab objects with one or both hands in a re
 
 
 ## Climbing
-![image](https://pouch.jumpshare.com/preview/c6n-sgObM43fh9gk0R-o98PSfUkvSP63JKOM8zvHO9Tcv0zyYlyonx2phFqaM_DUjaP90Dnm593LnoHuKEldtveUf_dG3LLZN5BkzXJ43dE)
+![image](https://pouch.jumpshare.com/preview/-LDbKmzOfZc2bZr-591gZZi6Nw010KVP0L145iv27aVdcHWjClcEsTGdWB8N_UsxTHgF7TiOSnnK2ulQgoIxFf_dub0UcmRJlkPcPJK68IQ)
 
 The grabbing system allows the user to climb objects using their hands. Grabbable objects can be fixed in space to create hand holds that the player can use to physically pull themselves up.
 
@@ -46,6 +46,9 @@ RealMotionVR's properties such as movement speed, mass and jump strength can be 
 ![image](https://pouch.jumpshare.com/preview/VPPOh1lrQ4kp0eDWkB6ctZAZFw6WiNrNF57MDsSa2rBX3S2KRJbGWdlodz_oHL3GHHLurDkIjAfub6ZUHHlMfUWP81PAkQQqeCzOQPqyXHA) 
 
 RealMotionVR also features a simple IK avatar model for added visual immersion. The avatar’s head, arms and legs are animated procedurally based off of the physics’s rig movement. This IK Rig is also scaled to match the user’s real height.
+
+## Dependencies
+RealMotionVR requires your Unity project to be using the new Input Action system, XR plugin Managment and XR Interaction Toolkit packages. It also requires the Animation Rigging package for the IK Rig.
 
 ## Additional Demos
 ![image](https://pouch.jumpshare.com/preview/QgC4QOAXSiKfAaRLUGtqiJIqP7xra3KueFugSneW4a_va8BfueuUJvtdgN_5aRCygg5KAC76urfLmL5pc3D4xZBop1nO34SKAZZAbjMh7wY)
