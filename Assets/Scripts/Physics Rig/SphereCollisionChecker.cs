@@ -11,13 +11,13 @@ public class SphereCollisionChecker : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        physicsRig.isGrounded = true;
+        physicsRig.IsGrounded = true;
     }
 
     // private void OnCollisionStay(Collision collision){}
 
     private void OnCollisionExit(Collision collision)
     {
-        physicsRig.isGrounded = false;
+        physicsRig.IsGrounded = false;
     }
 }

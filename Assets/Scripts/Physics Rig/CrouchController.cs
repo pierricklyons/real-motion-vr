@@ -17,7 +17,7 @@ public class CrouchController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (physicsRig.isJumping) return;
+        if (physicsRig.IsJumping) return;
 
         float minCrouchTarget = spineController.MinTarget - (xrInputManager.CameraControllerPosition.y - spineController.VerticalOffset);
         float maxCrouchTarget = spineController.MaxTarget - (xrInputManager.CameraControllerPosition.y - spineController.VerticalOffset);
@@ -28,18 +28,18 @@ public class CrouchController : MonoBehaviour
 
         physicsRig.CrouchTarget = xrInputManager.CameraControllerPosition.y + crouchOffset;
 
-        bool wasCrouching = physicsRig.isCrouching;
-        bool wasTiptoeing = physicsRig.isTiptoeing;
+        bool wasCrouching = physicsRig.IsCrouching;
+        bool wasTiptoeing = physicsRig.IsTiptoeing;
 
-        physicsRig.isCrouching = physicsRig.CrouchTarget < physicsRig.UserHeight - physicsRig.CrouchAndTiptoeTriggerThreshold;
-        physicsRig.isTiptoeing = physicsRig.CrouchTarget > physicsRig.UserHeight + physicsRig.CrouchAndTiptoeTriggerThreshold;
+        physicsRig.IsCrouching = physicsRig.CrouchTarget < physicsRig.UserHeight - physicsRig.CrouchAndTiptoeTriggerThreshold;
+        physicsRig.IsTiptoeing = physicsRig.CrouchTarget > physicsRig.UserHeight + physicsRig.CrouchAndTiptoeTriggerThreshold;
 
-        if (wasCrouching && !physicsRig.isCrouching && !physicsRig.isTiptoeing) physicsRig.isCrouching = true;
-        if (wasTiptoeing && !physicsRig.isTiptoeing && !physicsRig.isCrouching) physicsRig.isTiptoeing = true;
+        if (wasCrouching && !physicsRig.IsCrouching && !physicsRig.IsTiptoeing) physicsRig.IsCrouching = true;
+        if (wasTiptoeing && !physicsRig.IsTiptoeing && !physicsRig.IsCrouching) physicsRig.IsTiptoeing = true;
 
         if (xrInputManager.RightSecondaryValue == 1) crouchOffset = 0;
 
-        if (physicsRig.isTiptoeing && crouchOffset > 0 && inputY == 0) crouchOffset = physicsRig.UserHeight - xrInputManager.CameraControllerPosition.y;
+        if (physicsRig.IsTiptoeing && crouchOffset > 0 && inputY == 0) crouchOffset = physicsRig.UserHeight - xrInputManager.CameraControllerPosition.y;
 
         spineController.SetSpineTargetPosition(physicsRig.CrouchTarget);
     }

@@ -34,7 +34,7 @@ public class SpineController : MonoBehaviour
     {
         MinTarget = physicsRig.MinCrouchHeight - VerticalOffset;
         MaxTarget = physicsRig.MaxTiptoeHeight - VerticalOffset;
-        if (!physicsRig.isCrouching && !physicsRig.isTiptoeing && !physicsRig.isJumping) SetSpineTargetPosition(xrInputManager.CameraControllerPosition.y);
+        if (!physicsRig.IsCrouching && !physicsRig.IsTiptoeing && !physicsRig.IsJumping) SetSpineTargetPosition(xrInputManager.CameraControllerPosition.y);
     }
 
     public void SetSpineTargetPosition(float height)

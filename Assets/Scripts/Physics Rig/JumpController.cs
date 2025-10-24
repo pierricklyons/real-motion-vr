@@ -35,17 +35,17 @@ public class JumpController : MonoBehaviour
     {
         if (xrInputManger.RightPrimaryValue == 1)
         {
-            physicsRig.isJumping = true;
+            physicsRig.IsJumping = true;
             JumpPreload();
         }
 
-        if (physicsRig.isJumping && xrInputManger.RightPrimaryValue == 0)
+        if (physicsRig.IsJumping && xrInputManger.RightPrimaryValue == 0)
         {
-            physicsRig.isJumping = false;
+            physicsRig.IsJumping = false;
             JumpRelease();
         }
 
-        if (!physicsRig.isGrounded && !physicsRig.isJumping)
+        if (!physicsRig.IsGrounded && !physicsRig.IsJumping)
         {
             if (isLifting)
             {
