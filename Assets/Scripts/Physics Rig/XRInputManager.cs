@@ -4,85 +4,124 @@ using UnityEngine.InputSystem;
 
 public class XRInputManager : MonoBehaviour
 {
-    public ActionBasedController CameraController;
+    [Header("Controllers")]
+    [SerializeField] private ActionBasedController cameraController;
+    [SerializeField] private ActionBasedController leftHandController;
+    [SerializeField] private ActionBasedController rightHandController;
 
-    public ActionBasedController LeftHandController;
-    public InputActionReference LeftPrimaryPress;
-    public InputActionReference LeftSecondaryPress;
+    [Header("Input Actions")]
+    [SerializeField] private InputActionReference leftPrimaryPress;
+    [SerializeField] private InputActionReference leftSecondaryPress;
+    [SerializeField] private InputActionReference rightPrimaryPress;
+    [SerializeField] private InputActionReference rightSecondaryPress;
 
-    public ActionBasedController RightHandController;
-    public InputActionReference RightPrimaryPress;
-    public InputActionReference RightSecondaryPress;
+    [Header("Controller States")]
+    [SerializeField] private Vector3 cameraControllerPosition;
+    [SerializeField] private Quaternion cameraControllerRotation;
 
-    public Vector3 CameraControllerPosition;
-    public Quaternion CameraControllerRotation;
+    [SerializeField] private Vector3 leftHandControllerPosition;
+    [SerializeField] private Quaternion leftHandControllerRotation;
+    [SerializeField] private Vector2 leftTranslateAnchorValue;
+    [SerializeField] private float leftPrimaryValue;
+    [SerializeField] private float leftSecondaryValue;
+    [SerializeField] private float leftActivateValue;
+    [SerializeField] private float leftSelectValue;
 
-    public Vector3 LeftHandControllerPosition;
-    public Quaternion LeftHandControllerRotation;
-    public Vector2 LeftTranslateAnchorValue;
-    public float LeftPrimaryValue;
-    public float LeftSecondaryValue;
-    public float LeftActivateValue;
-    public float LeftSelectValue;
+    [SerializeField] private Vector3 rightHandControllerPosition;
+    [SerializeField] private Quaternion rightHandControllerRotation;
+    [SerializeField] private Vector2 rightTranslateAnchorValue;
+    [SerializeField] private float rightPrimaryValue;
+    [SerializeField] private float rightSecondaryValue;
+    [SerializeField] private float rightActivateValue;
+    [SerializeField] private float rightSelectValue;
 
-    public Vector3 RightHandControllerPosition;
-    public Quaternion RightHandControllerRotation;
-    public Vector2 RightTranslateAnchorValue;
-    public float RightPrimaryValue;
-    public float RightSecondaryValue;
-    public float RightActivateValue;
-    public float RightSelectValue;
+    [SerializeField] private bool areControllersInitialized;
 
-    public bool AreControllersInitialized;
+    public Vector3 CameraControllerPosition => cameraControllerPosition;
+    public Quaternion CameraControllerRotation => cameraControllerRotation;
+
+    public Vector3 LeftHandControllerPosition => leftHandControllerPosition;
+    public Quaternion LeftHandControllerRotation => leftHandControllerRotation;
+    public Vector2 LeftTranslateAnchorValue => leftTranslateAnchorValue;
+    public float LeftPrimaryValue => leftPrimaryValue;
+    public float LeftSecondaryValue => leftSecondaryValue;
+    public float LeftActivateValue => leftActivateValue;
+    public float LeftSelectValue => leftSelectValue;
+
+    public Vector3 RightHandControllerPosition => rightHandControllerPosition;
+    public Quaternion RightHandControllerRotation => rightHandControllerRotation;
+    public Vector2 RightTranslateAnchorValue => rightTranslateAnchorValue;
+    public float RightPrimaryValue => rightPrimaryValue;
+    public float RightSecondaryValue => rightSecondaryValue;
+    public float RightActivateValue => rightActivateValue;
+    public float RightSelectValue => rightSelectValue;
+
+    public bool AreControllersInitialized => areControllersInitialized;
 
     private void Update()
     {
-        GetControllerInputs();
-
-        AreControllersInitialized = GetAreControllersInitialized();
+        UpdateControllerInputs();
+        areControllersInitialized = CheckControllersInitialized();
     }
 
-    private bool GetAreControllersInitialized()
+    private bool CheckControllersInitialized()
     {
         return (
-            GetIsPositionValid(CameraControllerPosition) &&
-            GetIsRotationValid(CameraControllerRotation) &&
-            GetIsPositionValid(LeftHandControllerPosition) &&
-            GetIsRotationValid(LeftHandControllerRotation) &&
-            GetIsPositionValid(RightHandControllerPosition) &&
-            GetIsRotationValid(RightHandControllerRotation)
+            IsPositionValid(cameraControllerPosition) &&
+            IsRotationValid(cameraControllerRotation) &&
+            IsPositionValid(leftHandControllerPosition) &&
+            IsRotationValid(leftHandControllerRotation) &&
+            IsPositionValid(rightHandControllerPosition) &&
+            IsRotationValid(rightHandControllerRotation)
         );
     }
 
-    private bool GetIsPositionValid(Vector3 position)
+    private bool IsPositionValid(Vector3 position)
     {
-        return position != Vector3.zero && !float.IsNaN(position.x) && !float.IsInfinity(position.x);
+        return (
+            position != Vector3.zero &&
+            !float.IsNaN(position.x) &&
+            !float.IsInfinity(position.x) &&
+            !float.IsNaN(position.y) &&
+            !float.IsInfinity(position.y) &&
+            !float.IsNaN(position.z) &&
+            !float.IsInfinity(position.z)
+        );
     }
 
-    private bool GetIsRotationValid(Quaternion rotation)
+    private bool IsRotationValid(Quaternion rotation)
     {
-        return !float.IsNaN(rotation.x) && !float.IsNaN(rotation.y) && !float.IsNaN(rotation.z) && !float.IsNaN(rotation.w);
+        return (
+            !float.IsNaN(rotation.x) &&
+            !float.IsInfinity(rotation.x) &&
+            !float.IsNaN(rotation.y) &&
+            !float.IsInfinity(rotation.y) &&
+            !float.IsNaN(rotation.z) &&
+            !float.IsInfinity(rotation.z) &&
+            !float.IsNaN(rotation.w) &&
+            !float.IsInfinity(rotation.w)
+        );
     }
 
-    private void GetControllerInputs()
+    private void UpdateControllerInputs()
     {
-        CameraControllerPosition = CameraController.positionAction.action.ReadValue<Vector3>();
-        CameraControllerRotation = CameraController.rotationAction.action.ReadValue<Quaternion>();
+        cameraControllerPosition = cameraController.positionAction.action.ReadValue<Vector3>();
+        cameraControllerRotation = cameraController.rotationAction.action.ReadValue<Quaternion>();
 
-        LeftHandControllerPosition = LeftHandController.positionAction.action.ReadValue<Vector3>();
-        LeftHandControllerRotation = LeftHandController.rotationAction.action.ReadValue<Quaternion>();
-        LeftTranslateAnchorValue = LeftHandController.translateAnchorAction.action.ReadValue<Vector2>();
-        LeftPrimaryValue = LeftPrimaryPress.action.ReadValue<float>();
-        LeftSecondaryValue = LeftSecondaryPress.action.ReadValue<float>();
-        LeftActivateValue = LeftHandController.activateAction.action.ReadValue<float>();
-        LeftSelectValue = LeftHandController.selectAction.action.ReadValue<float>();
+        leftHandControllerPosition = leftHandController.positionAction.action.ReadValue<Vector3>();
+        leftHandControllerRotation = leftHandController.rotationAction.action.ReadValue<Quaternion>();
+        leftTranslateAnchorValue = leftHandController.translateAnchorAction.action.ReadValue<Vector2>();
+        leftPrimaryValue = leftPrimaryPress.action.ReadValue<float>();
+        leftSecondaryValue = leftSecondaryPress.action.ReadValue<float>();
+        leftActivateValue = leftHandController.activateAction.action.ReadValue<float>();
+        leftSelectValue = leftHandController.selectAction.action.ReadValue<float>();
 
-        RightHandControllerPosition = RightHandController.positionAction.action.ReadValue<Vector3>();
-        RightHandControllerRotation = RightHandController.rotationAction.action.ReadValue<Quaternion>();
-        RightTranslateAnchorValue = RightHandController.translateAnchorAction.action.ReadValue<Vector2>();
-        RightPrimaryValue = RightPrimaryPress.action.ReadValue<float>();
-        RightSecondaryValue = RightSecondaryPress.action.ReadValue<float>();
-        RightActivateValue = RightHandController.activateAction.action.ReadValue<float>();
-        RightSelectValue = RightHandController.selectAction.action.ReadValue<float>();
+        rightHandControllerPosition = rightHandController.positionAction.action.ReadValue<Vector3>();
+        rightHandControllerRotation = rightHandController.rotationAction.action.ReadValue<Quaternion>();
+        rightTranslateAnchorValue = rightHandController.translateAnchorAction.action.ReadValue<Vector2>();
+        rightPrimaryValue = rightPrimaryPress.action.ReadValue<float>();
+        rightSecondaryValue = rightSecondaryPress.action.ReadValue<float>();
+        rightActivateValue = rightHandController.activateAction.action.ReadValue<float>();
+        rightSelectValue = rightHandController.selectAction.action.ReadValue<float>();
     }
 }

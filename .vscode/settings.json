@@ -54,5 +54,6 @@
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.formatOnSave": true,
 	"prettier.useTabs": true,
-	"prettier.tabWidth": 4
+	"prettier.tabWidth": 4,
+	"dotnet.preferCSharpExtension": true
 }
