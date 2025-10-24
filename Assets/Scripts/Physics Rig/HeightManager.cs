@@ -2,36 +2,62 @@ using UnityEngine;
 
 public class HeightManager : MonoBehaviour
 {
-	private PhysicsRig physicsRig;
-	private XRInputManager xrInputManager;
+	[Header("References")]
+	[SerializeField] private PhysicsRig physicsRig;
+	[SerializeField] private XRInputManager xrInputManager;
+
+	[Header("Input Settings")]
+	[SerializeField] private float inputHoldDeltaThreshold = 0.5f;
 
 	private float inputHoldDelta = 0f;
-	public float inputHoldDeltaThreshold = 0.5f;
 
 	private void Awake()
 	{
-		physicsRig = GetComponent<PhysicsRig>();
-		xrInputManager = physicsRig.XRInputManager;
+		// Ensure references are set
+		if (physicsRig == null) physicsRig = GetComponent<PhysicsRig>();
 
-		physicsRig.UserHeight = physicsRig.DefaultUserHeight;
-		physicsRig.MaxTiptoeHeight = (physicsRig.TiptoeHeightPercentage / 100) * physicsRig.UserHeight;
-		physicsRig.MinCrouchHeight = (physicsRig.CrouchHeightPercentage / 100) * physicsRig.UserHeight;
+		if (xrInputManager == null && physicsRig != null) xrInputManager = physicsRig.XRInputManager;
+
+		if (physicsRig == null || xrInputManager == null)
+		{
+			Debug.LogWarning($"{nameof(HeightManager)}: Missing required references.");
+			return;
+		}
+
+		InitializeRigHeights();
 	}
 
 	private void FixedUpdate()
 	{
-		if (xrInputManager.RightSecondaryValue == 1)
+		if (physicsRig == null || xrInputManager == null) return;
+
+		// Hold secondary button to recalibrate height
+		if (xrInputManager.RightSecondaryValue == 1f)
 		{
 			inputHoldDelta += Time.deltaTime;
+
 			if (inputHoldDelta >= inputHoldDeltaThreshold) SetRigHeights();
 		}
-		else inputHoldDelta = 0f;
+		else
+		{
+			inputHoldDelta = 0f;
+		}
+	}
+
+	// Initialize to default height
+	private void InitializeRigHeights()
+	{
+		physicsRig.UserHeight = physicsRig.DefaultUserHeight;
+		physicsRig.MaxTiptoeHeight = (physicsRig.TiptoeHeightPercentage / 100f) * physicsRig.UserHeight;
+		physicsRig.MinCrouchHeight = (physicsRig.CrouchHeightPercentage / 100f) * physicsRig.UserHeight;
 	}
 
 	private void SetRigHeights()
 	{
-		physicsRig.UserHeight = xrInputManager.CameraControllerPosition.y;
-		physicsRig.MaxTiptoeHeight = (physicsRig.TiptoeHeightPercentage / 100) * physicsRig.UserHeight;
-		physicsRig.MinCrouchHeight = (physicsRig.CrouchHeightPercentage / 100) * physicsRig.UserHeight;
+		float currentCameraHeight = xrInputManager.CameraControllerPosition.y;
+
+		physicsRig.UserHeight = currentCameraHeight;
+		physicsRig.MaxTiptoeHeight = (physicsRig.TiptoeHeightPercentage / 100f) * physicsRig.UserHeight;
+		physicsRig.MinCrouchHeight = (physicsRig.CrouchHeightPercentage / 100f) * physicsRig.UserHeight;
 	}
 }

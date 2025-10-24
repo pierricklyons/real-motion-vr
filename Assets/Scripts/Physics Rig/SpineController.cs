@@ -1,46 +1,69 @@
 using UnityEngine;
 
+[RequireComponent(typeof(PhysicsRig))]
 public class SpineController : MonoBehaviour
 {
-    public float VerticalOffset;
-    public float TargetPosition;
-    public float MinTarget;
-    public float MaxTarget;
+    [Header("Spine Settings")]
+    [SerializeField] private float verticalOffset;
+    [SerializeField] private float targetPosition;
+    [SerializeField] private float minTarget;
+    [SerializeField] private float maxTarget;
 
-    private PhysicsRig physicsRig;
-    private XRInputManager xrInputManager;
+    [Header("References")]
+    [SerializeField] private PhysicsRig physicsRig;
+    [SerializeField] private XRInputManager xrInputManager;
+
     private GameObject head;
     private GameObject chest;
     private GameObject fender;
     private ConfigurableJoint spineJoint;
 
+    public float VerticalOffset => verticalOffset;
+    public float TargetPosition => targetPosition;
+    public float MinTarget => minTarget;
+    public float MaxTarget => maxTarget;
+
     private void Awake()
     {
-        physicsRig = GetComponent<PhysicsRig>();
-        xrInputManager = physicsRig.XRInputManager;
+        // Ensure references are assigned
+        if (physicsRig == null) physicsRig = GetComponent<PhysicsRig>();
+        if (xrInputManager == null && physicsRig != null) xrInputManager = physicsRig.XRInputManager;
+
+        if (physicsRig == null || xrInputManager == null)
+        {
+            Debug.LogWarning($"{nameof(SpineController)}: Missing required references.");
+            return;
+        }
 
         head = physicsRig.Head;
         chest = physicsRig.Chest;
         fender = physicsRig.Fender;
-
         spineJoint = physicsRig.SpineJoint;
 
-        VerticalOffset = fender.transform.localPosition.y + (head.transform.localPosition.y - chest.transform.localPosition.y);
-        MinTarget = physicsRig.MinCrouchHeight - VerticalOffset;
-        MaxTarget = physicsRig.MaxTiptoeHeight - VerticalOffset;
+        // Calculate offsets and bounds
+        verticalOffset = fender.transform.localPosition.y + (head.transform.localPosition.y - chest.transform.localPosition.y);
+
+        minTarget = physicsRig.MinCrouchHeight - verticalOffset;
+        maxTarget = physicsRig.MaxTiptoeHeight - verticalOffset;
     }
 
     private void FixedUpdate()
     {
-        MinTarget = physicsRig.MinCrouchHeight - VerticalOffset;
-        MaxTarget = physicsRig.MaxTiptoeHeight - VerticalOffset;
+        // Update crouch/tiptoe limits each frame
+        minTarget = physicsRig.MinCrouchHeight - verticalOffset;
+        maxTarget = physicsRig.MaxTiptoeHeight - verticalOffset;
+
+        // When standing normally (not crouching, tiptoeing, or jumping),
+        // the spine should follow the camera height
         if (!physicsRig.IsCrouching && !physicsRig.IsTiptoeing && !physicsRig.IsJumping) SetSpineTargetPosition(xrInputManager.CameraControllerPosition.y);
+
     }
 
     public void SetSpineTargetPosition(float height)
     {
-        TargetPosition = height;
-        float target = Mathf.Clamp(height - VerticalOffset, MinTarget, MaxTarget);
-        spineJoint.targetPosition = new Vector3(0, target, 0);
+        targetPosition = height;
+
+        float clampedHeight = Mathf.Clamp(height - verticalOffset, minTarget, maxTarget);
+        spineJoint.targetPosition = new Vector3(0f, clampedHeight, 0f);
     }
 }
