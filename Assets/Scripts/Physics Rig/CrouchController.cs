@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PhysicsRig))]
 public class CrouchController : MonoBehaviour
 {
     [Header("References")]
@@ -17,7 +16,6 @@ public class CrouchController : MonoBehaviour
         if (physicsRig == null) physicsRig = GetComponent<PhysicsRig>();
         if (xrInputManager == null && physicsRig != null) xrInputManager = physicsRig.XRInputManager;
         if (spineController == null) spineController = GetComponent<SpineController>();
-
         if (physicsRig == null || xrInputManager == null || spineController == null) Debug.LogWarning($"{nameof(CrouchController)}: Missing required references.");
     }
 

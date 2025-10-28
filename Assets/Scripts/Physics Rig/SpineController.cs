@@ -4,7 +4,7 @@ using UnityEngine;
 public class SpineController : MonoBehaviour
 {
     [Header("Spine Settings")]
-    [SerializeField] private float verticalOffset;
+    [SerializeField, ] private float verticalOffset;
     [SerializeField] private float targetPosition;
     [SerializeField] private float minTarget;
     [SerializeField] private float maxTarget;
