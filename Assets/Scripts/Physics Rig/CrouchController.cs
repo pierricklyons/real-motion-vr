@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(PhysicsRig))]
 public class CrouchController : MonoBehaviour
 {
     [Header("References")]

@@ -2,32 +2,50 @@ using UnityEngine;
 
 public class DynamicJointCapsuleCollider : MonoBehaviour
 {
-    public ConfigurableJoint Joint;
-    public CapsuleCollider CapsuleCollider;
-    public Transform MeshTransform;
+    [Header("References")]
+    [SerializeField] private ConfigurableJoint joint;
+    [SerializeField] private CapsuleCollider capsuleCollider;
+    [SerializeField] private Transform meshTransform;
+
+    public ConfigurableJoint Joint => joint;
+    public CapsuleCollider CapsuleCollider => capsuleCollider;
+    public Transform MeshTransform => meshTransform;
 
     private void Update()
     {
-        Vector3 anchorPositionA = Joint.transform.TransformPoint(Joint.anchor);
-        Vector3 anchorPositionB = Joint.connectedBody
-            ? Joint.connectedBody.transform.TransformPoint(Joint.connectedAnchor)
-            : Joint.connectedAnchor;
+        // Skip updates if setup is incomplete
+        if (joint == null || capsuleCollider == null) return;
 
+        // Get world positions of both joint anchors
+        Vector3 anchorPositionA = joint.transform.TransformPoint(joint.anchor);
+        Vector3 anchorPositionB = joint.connectedBody
+            ? joint.connectedBody.transform.TransformPoint(joint.connectedAnchor)
+            : joint.connectedAnchor;
+
+        // Calculate distance between anchors
         float distance = Vector3.Distance(anchorPositionA, anchorPositionB);
 
+        // Adjust for local scale — ensures collider height matches visual proportions
         float scaleFactor = transform.localScale.y;
-        float adjustedHeight = distance / scaleFactor;
+        float adjustedHeight = Mathf.Max(distance / scaleFactor, 0.1f); // Prevent zero or negative height
 
-        CapsuleCollider.height = Mathf.Max(adjustedHeight, 0.1f);
+        // Apply new collider height
+        capsuleCollider.height = adjustedHeight;
 
-        CapsuleCollider.center = transform.InverseTransformPoint((anchorPositionA + anchorPositionB) / 2);
+        // Center the collider between both anchors (in local space)
+        capsuleCollider.center = transform.InverseTransformPoint((anchorPositionA + anchorPositionB) / 2f);
 
-        if (MeshTransform != null)
+        // If a visual mesh is assigned, update its scale and position to match
+        if (meshTransform != null)
         {
-            Vector3 meshScale = MeshTransform.localScale;
-            meshScale.y = adjustedHeight / 2f;
-            MeshTransform.localScale = meshScale;
-            MeshTransform.position = (anchorPositionA + anchorPositionB) / 2;
+            Vector3 meshScale = meshTransform.localScale;
+            meshScale.y = adjustedHeight / 2f; // Divide by 2 since capsule height spans both directions
+            meshTransform.localScale = meshScale;
+
+            // Position mesh midway between both anchor points
+            meshTransform.position = (anchorPositionA + anchorPositionB) / 2f;
         }
     }
+
+
 }

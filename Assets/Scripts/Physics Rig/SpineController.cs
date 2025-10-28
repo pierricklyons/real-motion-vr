@@ -4,7 +4,7 @@ using UnityEngine;
 public class SpineController : MonoBehaviour
 {
     [Header("Spine Settings")]
-    [SerializeField, ] private float verticalOffset;
+    [SerializeField,] private float verticalOffset;
     [SerializeField] private float targetPosition;
     [SerializeField] private float minTarget;
     [SerializeField] private float maxTarget;
@@ -28,42 +28,47 @@ public class SpineController : MonoBehaviour
         // Ensure references are assigned
         if (physicsRig == null) physicsRig = GetComponent<PhysicsRig>();
         if (xrInputManager == null && physicsRig != null) xrInputManager = physicsRig.XRInputManager;
+        if (physicsRig == null || xrInputManager == null) Debug.LogWarning($"{nameof(SpineController)}: Missing required references.");
 
-        if (physicsRig == null || xrInputManager == null)
-        {
-            Debug.LogWarning($"{nameof(SpineController)}: Missing required references.");
-            return;
-        }
-
+        // Cache references from the physics rig
         head = physicsRig.Head;
         chest = physicsRig.Chest;
         fender = physicsRig.Fender;
         spineJoint = physicsRig.SpineJoint;
 
-        // Calculate offsets and bounds
+        // Calculate vertical offset:
         verticalOffset = fender.transform.localPosition.y + (head.transform.localPosition.y - chest.transform.localPosition.y);
 
+        // Initialize crouch and tiptoe limits based on the rig’s height configuration
         minTarget = physicsRig.MinCrouchHeight - verticalOffset;
         maxTarget = physicsRig.MaxTiptoeHeight - verticalOffset;
     }
 
     private void FixedUpdate()
     {
-        // Update crouch/tiptoe limits each frame
+        // Skip updates if setup is incomplete
+        if (physicsRig == null || xrInputManager == null) return;
+
+        // Continuously update crouch/tiptoe limits to match real-time rig height adjustments
         minTarget = physicsRig.MinCrouchHeight - verticalOffset;
         maxTarget = physicsRig.MaxTiptoeHeight - verticalOffset;
 
-        // When standing normally (not crouching, tiptoeing, or jumping),
-        // the spine should follow the camera height
+        // If the player is standing normally (not crouching, tiptoeing, or jumping), the spine joint should track the headset’s (camera’s) vertical position
         if (!physicsRig.IsCrouching && !physicsRig.IsTiptoeing && !physicsRig.IsJumping) SetSpineTargetPosition(xrInputManager.CameraControllerPosition.y);
-
     }
 
+
+    // Updates the target height of the spine joint, ensuring it stays within crouch/tiptoe limits
     public void SetSpineTargetPosition(float height)
     {
+        // Store the target height for debugging or external queries
         targetPosition = height;
 
+        // Clamp the height to stay within allowed crouch and tiptoe range
         float clampedHeight = Mathf.Clamp(height - verticalOffset, minTarget, maxTarget);
+
+        // Apply the clamped height to the ConfigurableJoint’s target position
         spineJoint.targetPosition = new Vector3(0f, clampedHeight, 0f);
     }
 }
+

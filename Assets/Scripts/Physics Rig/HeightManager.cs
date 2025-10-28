@@ -56,7 +56,7 @@ public class HeightManager : MonoBehaviour
 	}
 
 
-	/// Recalibrates the PhysicsRig height based on the current headset (camera) position.
+	// Recalibrates the PhysicsRig height based on the current headset (camera) position.
 	private void SetRigHeights()
 	{
 		// Get the current camera (HMD) Y position in world space
