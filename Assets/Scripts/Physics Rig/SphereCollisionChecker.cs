@@ -6,18 +6,20 @@ public class SphereCollisionChecker : MonoBehaviour
 
     void Awake()
     {
-        physicsRig = GetComponentInParent<PhysicsRig>();
+        // Ensure references are assigned
+        if (physicsRig == null) physicsRig = GetComponentInParent<PhysicsRig>();
+        if (physicsRig == null) Debug.LogWarning($"{nameof(JumpController)}: Missing required references.");
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        physicsRig.IsGrounded = true;
+        physicsRig.IsGrounded = true; // Set true if Sphere on collision
     }
 
     // private void OnCollisionStay(Collision collision){}
 
     private void OnCollisionExit(Collision collision)
     {
-        physicsRig.IsGrounded = false;
+        physicsRig.IsGrounded = false; // Set false on collisioin exit
     }
 }

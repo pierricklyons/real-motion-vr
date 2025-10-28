@@ -5047,6 +5047,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5709b9dca26ae84c9b6c5a1c8dda621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  physicsRig: {fileID: 0}
+  xrInputManager: {fileID: 0}
+  spineController: {fileID: 0}
   crouchOffset: 0
 --- !u!114 &3335816748438349249
 MonoBehaviour:
@@ -5060,8 +5063,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfa331f069206db448e93b6de69daf97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  physicsRig: {fileID: 0}
+  xrInputManager: {fileID: 0}
+  spineController: {fileID: 0}
+  jumpPreloadForce: 0
+  jumpReleaseForce: 0
   jumpPreloadOffset: 0
   jumpPreloadTarget: 0
+  isLifting: 0
 --- !u!114 &3335816748438349251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5074,6 +5083,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85974248eebdca14e952c99a535fcba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  physicsRig: {fileID: 0}
+  xrInputManager: {fileID: 0}
+  fenderRigidbody: {fileID: 0}
+  rotationSpeed: 0
 --- !u!114 &3335816748438349253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5086,6 +5099,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef540c4045d68824583e9fb6cf818783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  physicsRig: {fileID: 0}
+  xrInputManager: {fileID: 0}
+  leftHandJoint: {fileID: 0}
+  rightHandJoint: {fileID: 0}
 --- !u!114 &3335816748438349254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5109,7 +5126,7 @@ MonoBehaviour:
   leftHandJoint: {fileID: 3335816749351860867}
   rightHandJoint: {fileID: 3335816749351860866}
   spineJoint: {fileID: 3335816748649247312}
-  rotationSpeed: 180
+  rotationSpeed: 360
   movementSpeed: 5
   defaultUserHeight: 1.75
   userHeight: 1.75
@@ -5137,6 +5154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1e6bd14a24f3ec4dbfe0bad79fc4f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  physicsRig: {fileID: 0}
+  xrInputManager: {fileID: 0}
   inputHoldDeltaThreshold: 0.5
 --- !u!1 &3335816748438349272
 GameObject:
@@ -5211,10 +5230,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80beed3bd7b22e409540b6a0a000e0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VerticalOffset: 0
-  TargetPosition: 0
-  MinTarget: 0
-  MaxTarget: 0
+  verticalOffset: 0
+  targetPosition: 0
+  minTarget: 0
+  maxTarget: 0
+  physicsRig: {fileID: 0}
+  xrInputManager: {fileID: 0}
 --- !u!1 &3335816748504734219
 GameObject:
   m_ObjectHideFlags: 0
@@ -5228,7 +5249,7 @@ GameObject:
   - component: {fileID: 3335816748504734327}
   - component: {fileID: 3335816748504734326}
   - component: {fileID: 3335816748504734325}
-  - component: {fileID: 3335816748504734321}
+  - component: {fileID: 3335816748504734328}
   m_Layer: 7
   m_Name: Sphere
   m_TagString: Untagged
@@ -5244,18 +5265,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3335816748504734219}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &3335816748504734321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3335816748504734219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48e5d6b1549170c4697e056f405cceac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &3335816748504734324
 Transform:
   m_ObjectHideFlags: 0
@@ -5361,6 +5370,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3335816748504734328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3335816748504734219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48e5d6b1549170c4697e056f405cceac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &3335816748564799096
 Transform:
   m_ObjectHideFlags: 0
@@ -5859,8 +5880,8 @@ GameObject:
   - component: {fileID: 3335816748649247317}
   - component: {fileID: 3335816748649247316}
   - component: {fileID: 3335816748649247339}
-  - component: {fileID: 3335816748649247319}
   - component: {fileID: 3335816748649247312}
+  - component: {fileID: 3335816748649247319}
   m_Layer: 7
   m_Name: Fender
   m_TagString: Untagged
@@ -6502,9 +6523,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c2a60f13c30a26459d06cfaa7836e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Joint: {fileID: 3335816748649247312}
-  CapsuleCollider: {fileID: 3335816749365194018}
-  MeshTransform: {fileID: 3335816747805579876}
+  joint: {fileID: 3335816748649247312}
+  capsuleCollider: {fileID: 3335816749365194018}
+  meshTransform: {fileID: 3335816747805579876}
 --- !u!1 &3335816749365194023
 GameObject:
   m_ObjectHideFlags: 0
